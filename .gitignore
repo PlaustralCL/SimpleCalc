@@ -2,3 +2,6 @@ backup/
 lib/
 *.exe
 *.lps
+*.o
+*.ppu
+*.ini
