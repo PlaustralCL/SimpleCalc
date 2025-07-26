@@ -96,9 +96,16 @@ begin
         FToken := FToken + ch;
         FCurrentState := RealNumToken;
       end;
-    ' ', '(':
+    ' ':
       begin
         FTokenList.Add(FToken);
+        FToken := '';
+        FCurrentState := NewToken;
+      end;
+    '(':
+      begin
+        FTokenList.Add(FToken);
+        FTokenList.Add(ch);
         FToken := '';
         FCurrentState := NewToken;
       end;
@@ -108,12 +115,42 @@ begin
         FToken := ch;
         FCurrentState := IntegerToken;
       end;
+    else
+      begin
+        FTokenList.Add('Error');
+        FTokenList.Add(FToken);
+        FToken := '';
+        FCurrentState := NewToken;
+      end;
   end;
-
 end;
 
 procedure TTokenizer.ParseRealNumToken(ch: char);
 begin
+  case ch of
+    '0'..'9': FToken := FToken + ch;
+    ' ':
+      begin
+        FTokenList.Add(FToken);
+        FToken := '';
+        FCurrentState := NewToken;
+      end;
+    '+', '*', '/', '^', '(', ')', '%':
+      begin
+        FTokenList.Add(FToken);
+        FTokenList.Add(ch);
+        FToken := '';
+      end;
+    '-':
+      begin
+        FTokenList.Add(FToken);
+        FToken := ch;
+        FCurrentState := DashToken;
+      end;
+
+
+
+  end;
 
 end;
 
