@@ -20,6 +20,7 @@ type
       procedure ParseIntegerToken(ch: char);
       procedure ParseDashToken(ch: char);
       procedure ParseRealNumToken(ch: char);
+      procedure ParseError;
 
     public
       constructor Create(InputString: string);
@@ -30,6 +31,14 @@ type
 
 
 implementation
+
+procedure TTokenizer.ParseError;
+begin
+  FTokenList.Add('Error');
+  FTokenList.Add(FToken);
+  FToken := '';
+  FCurrentState := NewToken;
+end;
 
 procedure TTokenizer.ParseNewToken(ch: char);
 begin
@@ -54,6 +63,9 @@ begin
         FTokenList.Add(ch);
         FToken := '';
       end;
+    ' ': FToken := '';
+    else
+      ParseError;
   end;
 end;
 
@@ -80,6 +92,8 @@ begin
         FToken := '';
         FCurrentState := NewToken;
       end;
+    else
+      ParseError;
   end;
 end;
 
@@ -116,12 +130,7 @@ begin
         FCurrentState := IntegerToken;
       end;
     else
-      begin
-        FTokenList.Add('Error');
-        FTokenList.Add(FToken);
-        FToken := '';
-        FCurrentState := NewToken;
-      end;
+      ParseError;
   end;
 end;
 
@@ -147,9 +156,8 @@ begin
         FToken := ch;
         FCurrentState := DashToken;
       end;
-
-
-
+    else
+      ParseError;
   end;
 
 end;
