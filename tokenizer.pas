@@ -42,23 +42,73 @@ begin
     '.':
       begin
         FToken := FToken + ch;
-        FCurrentState := RealNumToken
+        FCurrentState := RealNumToken;
       end;
     '-':
       begin
         FToken := FToken + ch;
         FCurrentState := DashToken;
       end;
+    '+', '*', '/', '^', '(', ')', '%':
+      begin
+        FTokenList.Add(ch);
+        FToken := '';
+      end;
   end;
 end;
 
 procedure TTokenizer.ParseIntegerToken(ch: char);
 begin
-
+  case ch of
+    '0'..'9': FToken := FToken + ch;
+    '.':
+      begin
+        FToken := FToken + ch;
+        FCurrentState := RealNumToken;
+      end;
+    // If in Integer state, the '-' has to be subtraction operator
+    '+', '*', '/', '^', '(', ')', '%', '-':
+      begin
+        FTokenList.Add(FToken);
+        FTokenList.Add(ch);
+        FToken := '';
+        FCurrentState := NewToken;
+      end;
+    ' ':
+      begin
+        FTokenList.Add(FToken);
+        FToken := '';
+        FCurrentState := NewToken;
+      end;
+  end;
 end;
 
 procedure TTokenizer.ParseDashToken(ch: char);
 begin
+  case ch of
+    '0'..'9':
+      begin
+        FToken := FToken + ch;
+        FCurrentState := IntegerToken;
+      end;
+    '.':
+      begin
+        FToken := FToken + ch;
+        FCurrentState := RealNumToken;
+      end;
+    ' ', '(':
+      begin
+        FTokenList.Add(FToken);
+        FToken := '';
+        FCurrentState := NewToken;
+      end;
+    '-':
+      begin
+        FTokenList.Add(FToken);
+        FToken := ch;
+        FCurrentState := IntegerToken;
+      end;
+  end;
 
 end;
 
@@ -90,6 +140,8 @@ begin
         FTokenList.Add('unknown token');
     end;
   end;
+  FTokenList.Add(FToken);
+
 
 
   ParseTokens := FTokenList;
