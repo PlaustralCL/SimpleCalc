@@ -1,6 +1,6 @@
 program calc;
 
-uses Tokenizer;
+uses Classes, SysUtils, Tokenizer;
 
 const
   Digits = ['0'..'9'];
@@ -15,7 +15,8 @@ var
   TestString, token, x: string;
   i, j: integer;
   TokenCount: integer;
-  TokenList: TTokenizer;
+  TokenParser: TTokenizer;
+  TokenList: TStringList;
 
 
 begin
@@ -24,8 +25,10 @@ begin
   token := '';
   TestString := '111 + 22+3';
 
-  TokenList := TTokenizer.Create(TestString);
-  writeln(TokenList.ToString);
+  TokenParser := TTokenizer.Create(TestString);
+  TokenList := TokenParser.ParseTokens;
+  for x in TokenList do
+      writeln(x);
 
 
 

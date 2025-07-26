@@ -3,29 +3,40 @@ unit Tokenizer;
 {$mode ObjFPC}{$H+}
 
 interface
-type
-  TTokenizer = class
-    private
-      FTokenString: string;
-    public
-      constructor Create(InputString: string);
-      function ToString: string;
-  end;
-
-
-implementation
 uses
   Classes, SysUtils;
 
+type
+  TTokenizer = class
+    private
+      FInputString: string;
+      FTokenList: TStringList;
+    public
+      constructor Create(InputString: string);
+      function ParseTokens: TStringList;
+  end;
+
+
+
+
+implementation
+
 constructor TTokenizer.Create(InputString: string);
 begin
-  FTokenString := InputString;
+  FInputString := InputString;
+  FTokenList := TStringList.Create;
 end;
 
-function TTokenizer.ToString: string;
+function TTokenizer.ParseTokens: TStringList;
 begin
-  ToString := FTokenSTring + 'zzz';
+  FTokenList := TStringList.Create;
+  FTokenList.Add('Hello ');
+  FTokenList.Add('World');
+  ParseTokens := FTokenList;
 end;
+
+
+
 
 
 end.
