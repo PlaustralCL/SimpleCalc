@@ -32,6 +32,33 @@ type
 
 implementation
 
+constructor TTokenizer.Create(InputString: string);
+begin
+  FInputString := InputString;
+  FTokenList := TStringList.Create;
+  FToken := '';
+  FCurrentState := NewToken;
+end;
+
+function TTokenizer.ParseTokens: TStringList;
+var
+  ch: char;
+begin
+  for ch in FInputString do
+  begin
+    case FCurrentState of
+      NewToken: ParseNewToken(ch);
+      IntegerToken: ParseIntegerToken(ch);
+      DashToken: ParseDashToken(ch);
+      RealNumToken: ParseRealNumToken(ch);
+      else
+        FTokenList.Add('unknown token');
+    end;
+  end;
+  FTokenList.Add(FToken);
+  ParseTokens := FTokenList;
+end;
+
 procedure TTokenizer.ParseError;
 begin
   FTokenList.Add('Error');
@@ -116,7 +143,7 @@ begin
         FToken := '';
         FCurrentState := NewToken;
       end;
-    '(':
+    '+', '*', '/', '^', '(', ')', '%':
       begin
         FTokenList.Add(FToken);
         FTokenList.Add(ch);
@@ -149,6 +176,7 @@ begin
         FTokenList.Add(FToken);
         FTokenList.Add(ch);
         FToken := '';
+        FCurrentState := NewToken;
       end;
     '-':
       begin
@@ -162,35 +190,7 @@ begin
 
 end;
 
-constructor TTokenizer.Create(InputString: string);
-begin
-  FInputString := InputString;
-  FTokenList := TStringList.Create;
-  FToken := '';
-  FCurrentState := NewToken;
-end;
 
-function TTokenizer.ParseTokens: TStringList;
-var
-  ch: char;
-begin
-  for ch in FInputString do
-  begin
-    case FCurrentState of
-      NewToken: ParseNewToken(ch);
-      IntegerToken: ParseIntegerToken(ch);
-      DashToken: ParseDashToken(ch);
-      RealNumToken: ParseRealNumToken(ch);
-      else
-        FTokenList.Add('unknown token');
-    end;
-  end;
-  FTokenList.Add(FToken);
-
-
-
-  ParseTokens := FTokenList;
-end;
 
 
 
