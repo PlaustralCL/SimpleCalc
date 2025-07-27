@@ -7,7 +7,7 @@ uses
   Classes, SysUtils;
 
 type
-  TokenizerState = (NewToken, IntegerToken, DashToken, RealNumToken);
+  TokenizerState = (NewToken, IntegerToken, DashToken, RealNumToken, LetterToken);
 
   { TTokenizer }
 
@@ -21,6 +21,8 @@ type
       procedure ParseDashToken(ch: char);
       procedure ParseRealNumToken(ch: char);
       procedure ParseError;
+      procedure ProcessWhitespace;
+
 
     public
       constructor Create(InputString: string);
@@ -59,9 +61,18 @@ begin
   ParseTokens := FTokenList;
 end;
 
+
+
 procedure TTokenizer.ParseError;
 begin
   FTokenList.Add('Error');
+  FTokenList.Add(FToken);
+  FToken := '';
+  FCurrentState := NewToken;
+end;
+
+procedure TTokenizer.ProcessWhitespace;
+begin
   FTokenList.Add(FToken);
   FToken := '';
   FCurrentState := NewToken;
@@ -113,11 +124,29 @@ begin
         FToken := '';
         FCurrentState := NewToken;
       end;
-    ' ':
+    ' ': ProcessWhitespace;
+    else
+      ParseError;
+  end;
+end;
+
+procedure TTokenizer.ParseRealNumToken(ch: char);
+begin
+  case ch of
+    '0'..'9': FToken := FToken + ch;
+    ' ': ProcessWhitespace;
+    '+', '*', '/', '^', '(', ')', '%':
       begin
         FTokenList.Add(FToken);
+        FTokenList.Add(ch);
         FToken := '';
         FCurrentState := NewToken;
+      end;
+    '-':
+      begin
+        FTokenList.Add(FToken);
+        FToken := ch;
+        FCurrentState := DashToken;
       end;
     else
       ParseError;
@@ -137,12 +166,7 @@ begin
         FToken := FToken + ch;
         FCurrentState := RealNumToken;
       end;
-    ' ':
-      begin
-        FTokenList.Add(FToken);
-        FToken := '';
-        FCurrentState := NewToken;
-      end;
+    ' ': ProcessWhitespace;
     '+', '*', '/', '^', '(', ')', '%':
       begin
         FTokenList.Add(FToken);
@@ -161,34 +185,7 @@ begin
   end;
 end;
 
-procedure TTokenizer.ParseRealNumToken(ch: char);
-begin
-  case ch of
-    '0'..'9': FToken := FToken + ch;
-    ' ':
-      begin
-        FTokenList.Add(FToken);
-        FToken := '';
-        FCurrentState := NewToken;
-      end;
-    '+', '*', '/', '^', '(', ')', '%':
-      begin
-        FTokenList.Add(FToken);
-        FTokenList.Add(ch);
-        FToken := '';
-        FCurrentState := NewToken;
-      end;
-    '-':
-      begin
-        FTokenList.Add(FToken);
-        FToken := ch;
-        FCurrentState := DashToken;
-      end;
-    else
-      ParseError;
-  end;
 
-end;
 
 
 
