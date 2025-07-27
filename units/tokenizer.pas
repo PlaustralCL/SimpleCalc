@@ -7,7 +7,7 @@ uses
   Classes, SysUtils;
 
 type
-  TokenizerState = (NewToken, IntegerToken, DashToken, RealNumToken, LetterToken);
+  TokenizerState = (NewToken, IntegerToken, DashToken, RealNumToken, AlphaToken);
 
   { TTokenizer }
 
@@ -20,10 +20,9 @@ type
       procedure ParseIntegerToken(ch: char);
       procedure ParseDashToken(ch: char);
       procedure ParseRealNumToken(ch: char);
+      procedure ParseAlphaToken(ch: char);
       procedure ParseError;
       procedure ProcessWhitespace;
-
-
     public
       constructor Create(InputString: string);
       function ParseTokens: TStringList;
@@ -53,6 +52,7 @@ begin
       IntegerToken: ParseIntegerToken(ch);
       DashToken: ParseDashToken(ch);
       RealNumToken: ParseRealNumToken(ch);
+      AlphaToken: ParseAlphaToken(ch);
       else
         FTokenList.Add('unknown token');
     end;
@@ -97,6 +97,11 @@ begin
         FToken := FToken + ch;
         FCurrentState := DashToken;
       end;
+    'A'..'Z', 'a'..'z':
+      begin
+        FToken := ch;
+        FCurrentState := AlphaToken;
+      end;
     else
       begin
         FTokenList.Add(ch);
@@ -115,6 +120,12 @@ begin
         FToken := FToken + ch;
         FCurrentState := RealNumToken;
       end;
+    'A'..'Z', 'a'..'z':
+      begin
+        FTokenList.Add(FToken);
+        FToken := ch;
+        FCurrentState := AlphaToken;
+      end;
     else
       begin
         FTokenList.Add(FToken);
@@ -130,6 +141,12 @@ begin
   case ch of
     '0'..'9': FToken := FToken + ch;
     ' ': ProcessWhitespace;
+    'A'..'Z', 'a'..'z':
+      begin
+        FTokenList.Add(FToken);
+        FToken := ch;
+        FCurrentState := AlphaToken;
+      end;
     else
       begin
         FTokenList.Add(FToken);
@@ -160,6 +177,12 @@ begin
         FToken := ch;
         FCurrentState := IntegerToken;
       end;
+    'A'..'Z', 'a'..'z':
+      begin
+        FTokenList.Add(FToken);
+        FToken := ch;
+        FCurrentState := AlphaToken;
+      end;
     else
       begin
         FTokenList.Add(FToken);
@@ -170,6 +193,23 @@ begin
   end;
 end;
 
+procedure TTokenizer.ParseAlphaToken(ch: char);
+begin
+  case ch of
+    'A'..'Z', 'a'..'z':
+      begin
+        FToken := FToken + ch;
+      end;
+    else
+      begin
+        FTokenList.Add(FToken);
+        FToken := '';
+        FCurrentState := NewToken;
+        ParseNewToken(ch);
+      end;
+  end;
+
+end;
 
 
 
