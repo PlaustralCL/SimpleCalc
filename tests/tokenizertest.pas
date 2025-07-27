@@ -190,11 +190,98 @@ begin
   ExpectedTokenList := TStringList.Create;
   ExpectedTokenList.Add('-.111');
   ExpectedTokenList.Add('-');
-  ExpectedTokenList.Add('-22');
+  ExpectedTokenList.Add('-2.2');
   ExpectedTokenList.Add('/');
   ExpectedTokenList.Add('-.3');
 
-  TestString := '-.111 - -22/-.3';
+  TestString := '-.111 - -2.2/-.3';
+  TokenParser := TTokenizer.Create(TestString);
+  ActualTokenList := TokenParser.ParseTokens;
+  msg := 'Token count for ' + TestString;
+  AssertEqualsInt(ExpectedTokenList.Count, ActualTokenList.Count, msg );
+
+  for i := 0 to ExpectedTokenList.Count - 1 do
+  begin
+    msg := 'Element verification for ' + TestString;
+    AssertEqualsString(ExpectedTokenList[i], ActualTokenList[i], msg);
+  end;
+end;
+
+procedure TestRealAlpha;
+var
+  TestString, msg: string;
+  TokenParser: TTokenizer;
+  ActualTokenList: TStringList;
+  ExpectedTokenList: TStringList;
+  i: integer;
+begin
+  ExpectedTokenList := TStringList.Create;
+  ExpectedTokenList.Add('-.111');
+  ExpectedTokenList.Add('aBc');
+  ExpectedTokenList.Add('-');
+  ExpectedTokenList.Add('-2.2');
+  ExpectedTokenList.Add('/');
+  ExpectedTokenList.Add('-.3');
+
+  TestString := '-.111aBc - -2.2/-.3';
+  TokenParser := TTokenizer.Create(TestString);
+  ActualTokenList := TokenParser.ParseTokens;
+  msg := 'Token count for ' + TestString;
+  AssertEqualsInt(ExpectedTokenList.Count, ActualTokenList.Count, msg );
+
+  for i := 0 to ExpectedTokenList.Count - 1 do
+  begin
+    msg := 'Element verification for ' + TestString;
+    AssertEqualsString(ExpectedTokenList[i], ActualTokenList[i], msg);
+  end;
+end;
+
+procedure TestIntAlpha;
+var
+  TestString, msg: string;
+  TokenParser: TTokenizer;
+  ActualTokenList: TStringList;
+  ExpectedTokenList: TStringList;
+  i: integer;
+begin
+  ExpectedTokenList := TStringList.Create;
+  ExpectedTokenList.Add('111');
+  ExpectedTokenList.Add('aBc');
+  ExpectedTokenList.Add('-');
+  ExpectedTokenList.Add('-2.2');
+  ExpectedTokenList.Add('/');
+  ExpectedTokenList.Add('-.3');
+
+  TestString := '111aBc - -2.2/-.3';
+  TokenParser := TTokenizer.Create(TestString);
+  ActualTokenList := TokenParser.ParseTokens;
+  msg := 'Token count for ' + TestString;
+  AssertEqualsInt(ExpectedTokenList.Count, ActualTokenList.Count, msg );
+
+  for i := 0 to ExpectedTokenList.Count - 1 do
+  begin
+    msg := 'Element verification for ' + TestString;
+    AssertEqualsString(ExpectedTokenList[i], ActualTokenList[i], msg);
+  end;
+end;
+
+procedure TestAloneAlpha;
+var
+  TestString, msg: string;
+  TokenParser: TTokenizer;
+  ActualTokenList: TStringList;
+  ExpectedTokenList: TStringList;
+  i: integer;
+begin
+  ExpectedTokenList := TStringList.Create;
+  ExpectedTokenList.Add('111');
+  ExpectedTokenList.Add('aBc');
+  ExpectedTokenList.Add('-');
+  ExpectedTokenList.Add('-2.2');
+  ExpectedTokenList.Add('/');
+  ExpectedTokenList.Add('-.3');
+
+  TestString := '111 aBc - -2.2/-.3';
   TokenParser := TTokenizer.Create(TestString);
   ActualTokenList := TokenParser.ParseTokens;
   msg := 'Token count for ' + TestString;
@@ -216,6 +303,9 @@ begin
   TestAddNegativeNumberWithSpace;
   TestRealNum;
   TestRealNegNum;
+  TestRealAlpha;
+  TestIntAlpha;
+  TestAloneAlpha;
 
   writeln('Tests complete');
   writeln('Number of failed tests: ', FailedTestCount);
