@@ -217,7 +217,7 @@ var
 begin
   ExpectedTokenList := TStringList.Create;
   ExpectedTokenList.Add('-.111');
-  ExpectedTokenList.Add('aBc');
+  ExpectedTokenList.Add('abc');
   ExpectedTokenList.Add('-');
   ExpectedTokenList.Add('-2.2');
   ExpectedTokenList.Add('/');
@@ -246,7 +246,7 @@ var
 begin
   ExpectedTokenList := TStringList.Create;
   ExpectedTokenList.Add('111');
-  ExpectedTokenList.Add('aBc');
+  ExpectedTokenList.Add('abc');
   ExpectedTokenList.Add('-');
   ExpectedTokenList.Add('-2.2');
   ExpectedTokenList.Add('/');
@@ -275,7 +275,7 @@ var
 begin
   ExpectedTokenList := TStringList.Create;
   ExpectedTokenList.Add('111');
-  ExpectedTokenList.Add('aBc');
+  ExpectedTokenList.Add('abc');
   ExpectedTokenList.Add('-');
   ExpectedTokenList.Add('-2.2');
   ExpectedTokenList.Add('/');

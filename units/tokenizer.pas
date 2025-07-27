@@ -99,8 +99,8 @@ begin
       end;
     'A'..'Z', 'a'..'z':
       begin
-        FToken := ch;
         FCurrentState := AlphaToken;
+        ParseAlphaToken(ch);
       end;
     else
       begin
@@ -123,8 +123,9 @@ begin
     'A'..'Z', 'a'..'z':
       begin
         FTokenList.Add(FToken);
-        FToken := ch;
+        FToken := '';
         FCurrentState := AlphaToken;
+        ParseAlphaToken(ch);
       end;
     else
       begin
@@ -144,8 +145,9 @@ begin
     'A'..'Z', 'a'..'z':
       begin
         FTokenList.Add(FToken);
-        FToken := ch;
+        FToken := '';
         FCurrentState := AlphaToken;
+        ParseAlphaToken(ch);
       end;
     else
       begin
@@ -180,8 +182,9 @@ begin
     'A'..'Z', 'a'..'z':
       begin
         FTokenList.Add(FToken);
-        FToken := ch;
+        FToken := '';
         FCurrentState := AlphaToken;
+        ParseAlphaToken(ch);
       end;
     else
       begin
@@ -196,7 +199,12 @@ end;
 procedure TTokenizer.ParseAlphaToken(ch: char);
 begin
   case ch of
-    'A'..'Z', 'a'..'z':
+    'A'..'Z':
+      begin
+        ch := chr(ord(ch) + 32); // convert to lowercase
+        FToken := FToken + ch;
+      end;
+      'a'..'z':
       begin
         FToken := FToken + ch;
       end;
