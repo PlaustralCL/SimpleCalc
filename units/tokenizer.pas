@@ -86,6 +86,7 @@ begin
         FToken := FToken + ch;
         FCurrentState := IntegerToken;
       end;
+    ' ': FToken := '';
     '.':
       begin
         FToken := FToken + ch;
@@ -96,14 +97,11 @@ begin
         FToken := FToken + ch;
         FCurrentState := DashToken;
       end;
-    '+', '*', '/', '^', '(', ')', '%':
+    else
       begin
         FTokenList.Add(ch);
         FToken := '';
       end;
-    ' ': FToken := '';
-    else
-      ParseError;
   end;
 end;
 
@@ -117,17 +115,13 @@ begin
         FToken := FToken + ch;
         FCurrentState := RealNumToken;
       end;
-
-    // If in Integer state, the '-' has to be subtraction operator
-    '+', '*', '/', '^', '(', ')', '%', '-':
+    else
       begin
         FTokenList.Add(FToken);
         FTokenList.Add(ch);
         FToken := '';
         FCurrentState := NewToken;
       end;
-    else
-      ParseError;
   end;
 end;
 
@@ -136,21 +130,13 @@ begin
   case ch of
     '0'..'9': FToken := FToken + ch;
     ' ': ProcessWhitespace;
-    '+', '*', '/', '^', '(', ')', '%':
+    else
       begin
         FTokenList.Add(FToken);
         FTokenList.Add(ch);
         FToken := '';
         FCurrentState := NewToken;
       end;
-    '-':
-      begin
-        FTokenList.Add(FToken);
-        FToken := ch;
-        FCurrentState := DashToken;
-      end;
-    else
-      ParseError;
   end;
 end;
 
@@ -174,15 +160,13 @@ begin
         FToken := ch;
         FCurrentState := IntegerToken;
       end;
-    '+', '*', '/', '^', '(', ')', '%':
+    else
       begin
         FTokenList.Add(FToken);
         FTokenList.Add(ch);
         FToken := '';
         FCurrentState := NewToken;
       end;
-    else
-      ParseError;
   end;
 end;
 
