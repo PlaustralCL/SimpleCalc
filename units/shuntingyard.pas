@@ -5,16 +5,19 @@ unit shuntingyard;
 interface
 
 uses
-  Classes, SysUtils, Contnrs;
+  Classes, SysUtils, Generics.Collections;
 
 Type
+  TStringStack = specialize TStack<string>;
+
 
   { TShuntingYard }
 
   TShuntingYard = class
     private
-      FOperatorStack: TStack;
+      //FOperatorStack: TStack;
       FTokenList: TStringList;
+      FOperatorStack: TStringStack;
     public
       constructor Create(TokenList: TStringList);
       function ConvertToPostfix: TStringList;
@@ -29,9 +32,8 @@ implementation
 
 constructor TShuntingYard.Create(TokenList: TStringList);
 begin
-  FOperatorStack := TStack.Create;
+  FOperatorStack := TStringStack.Create;
   FTokenList := TokenList;
-
 end;
 
 function TShuntingYard.ConvertToPostfix: TStringList;
@@ -44,12 +46,12 @@ begin
   for token in FTokenList do
   begin
     case token of
-      '+', '-', '*', '/':  FOperatorStack.Push(TObject(token));
+    '+', '-', '*', '/': FOperatorStack.Push(token);
     end;
   end;
   while FOperatorStack.Count > 0 do
   begin
-    PostFix.Add(String(FOperatorStack.pop));
+    PostFix.Add(FOperatorStack.Pop);
 
   end;
 
