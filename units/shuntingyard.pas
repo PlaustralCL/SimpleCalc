@@ -4,8 +4,11 @@ unit shuntingyard;
 
 interface
 
+
 uses
   Classes, SysUtils, Generics.Collections;
+
+
 
 Type
   TStringStack = specialize TStack<string>;
@@ -21,9 +24,12 @@ Type
     public
       constructor Create(TokenList: TStringList);
       function ConvertToPostfix: TStringList;
+      function IsOperator(token: string): boolean;
   end;
 
 implementation
+const
+  Operators: array[1..4] of string = ('+', '-', '*', '/');
 
 
 
@@ -36,6 +42,16 @@ begin
   FTokenList := TokenList;
 end;
 
+function TShuntingYard.IsOperator(token: string): boolean;
+var
+  i: integer;
+begin
+  IsOperator := False;
+  for i := low(Operators) to high(operators) do
+    if Operators[i] = token then
+       IsOperator := True;
+end;
+
 function TShuntingYard.ConvertToPostfix: TStringList;
 var
   token: string;
@@ -45,9 +61,11 @@ begin
   PostFix := TStringList.Create;
   for token in FTokenList do
   begin
-    case token of
-    '+', '-', '*', '/': FOperatorStack.Push(token);
-    end;
+    if IsOperator(token) then
+       FOperatorStack.Push(token);
+    //case token of
+    //'+', '-', '*', '/': FOperatorStack.Push(token);
+    //end;
   end;
   while FOperatorStack.Count > 0 do
   begin
