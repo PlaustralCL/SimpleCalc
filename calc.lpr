@@ -1,39 +1,65 @@
 program calc;
 
-uses Classes, SysUtils, Tokenizer;
+uses Classes, SysUtils, Tokenizer,
+ShuntingYardParser, Generics.Collections, MathOperations;
 
-const
-  Digits = ['0'..'9'];
-type
-  TokenizerState = (NewTokenState, IntegerState, DashState, RealNumState);
+Type
+  TStringQueue = specialize TQueue<string>;
 
 
 var
-  CurrentState: TokenizerState;
-  //TokenList: array[1..80] of string;
-  ch: char;
-  TestString, token, x: string;
+  InputString, token, TestString, x: string;
   i, j: integer;
-  TokenCount: integer;
   TokenParser: TTokenizer;
   TokenList: TStringList;
+  IsDone: boolean;
+  ShuntingYard: TShuntingYardParser;
+  PostFix: TStringQueue;
 
 
 begin
-  CurrentState := NewTokenState;
-  TokenCount := 0;
-  token := '';
-  TestString := '111 + 22+3';
+  IsDone := False;
 
-  TokenParser := TTokenizer.Create(TestString);
-  TokenList := TokenParser.ParseTokens;
-  for x in TokenList do
-      writeln(x);
+  TestString := '111 aBc - -2.2/-.3';
+
+  repeat
+    write('> ');
+    Readln(InputString);
+    TokenParser := TTokenizer.Create(InputString);
+    TokenList := TokenParser.ParseTokens;
+    for token in TokenList do
+    begin
+      if token = 'quit' then
+      begin
+         IsDone := True;
+      end;
+    end;
+    if not IsDone then
+       begin
+         ShuntingYard := TShuntingYardParser.Create(TokenList);
+         PostFix := ShuntingYard.ConvertToPostfix;
+         write('PostFix: ');
+         for x in PostFix do
+         begin
+           write(x, ' ');
+         end;
+       end;
+
+    writeln('');
+
+  until IsDone;
 
 
-
-
-  readln();
+  //TokenParser := TTokenizer.Create(TestString);
+  //TokenList := TokenParser.ParseTokens;
+  //writeln('TestString: ', TestString);
+  //for x in TokenList do
+  //    writeln(x);
+  //
+  //
+  //
+  //
+  //readln();
 
 
 end.

@@ -34,6 +34,26 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="Tokenizer"/>
       </Unit>
+      <Unit>
+        <Filename Value="tokenizertest.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="TokenizerTest"/>
+      </Unit>
+      <Unit>
+        <Filename Value="units\shuntingyardparser.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="ShuntingYardParser"/>
+      </Unit>
+      <Unit>
+        <Filename Value="units\testcase1.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="TestCase1"/>
+      </Unit>
+      <Unit>
+        <Filename Value="mathoperations.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="MathOperations"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -44,6 +64,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
+      <OtherUnitFiles Value="units"/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Linking>

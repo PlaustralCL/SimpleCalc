@@ -1,4 +1,4 @@
-unit shuntingyard;
+unit ShuntingYardParser;
 
 {$mode ObjFPC}{$H+}
 
