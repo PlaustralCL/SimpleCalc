@@ -8,8 +8,6 @@ interface
 uses
   Classes, SysUtils, Generics.Collections;
 
-
-
 Type
   TStringStack = specialize TStack<string>;
   TStringQueue = specialize TQueue<string>;
@@ -20,7 +18,7 @@ Type
   TShuntingYard = class
     public
       constructor Create(TokenList: TStringList);
-      function ConvertToPostfix: TStringList;
+      function ConvertToPostfix: TStringQueue;
 
     private
       FTokenList: TStringList;
@@ -88,13 +86,10 @@ begin
   end;
 end;
 
-function TShuntingYard.ConvertToPostfix: TStringList;
+function TShuntingYard.ConvertToPostfix: TStringQueue;
 var
   token: string;
-  PostFix: TStringList;
-  x: string;
 begin
-  PostFix := TStringList.Create;
   for token in FTokenList do
   begin
     // Source: https://mathcenter.oxford.emory.edu/site/cs171/shuntingYardAlgorithm/
@@ -148,13 +143,7 @@ begin
     FOutputQueue.Enqueue(FOperatorStack.Pop);
   end;
 
-  // Convert the output queue to the TStringList for the return value
-  while FOutputQueue.Count > 0 do
-  begin
-    PostFix.Add(FOutputQueue.Dequeue);
-  end;
-
-  ConvertToPostfix := PostFix;
+  ConvertToPostfix := FOutputQueue;
 end;
 
 end.
