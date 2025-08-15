@@ -28,6 +28,8 @@ Type
       function IsNumber(token: string): boolean;
       function IsValidToken(token: string): boolean;
       function OperatorPrecedence(token: string): integer;
+      procedure ProcessLowPriorityOperator(const token: string);
+      procedure ProcessRightParenthesis;
   end;
 
 implementation
@@ -86,6 +88,40 @@ begin
   end;
 end;
 
+procedure TShuntingYardParser.ProcessLowPriorityOperator(const token: string);
+{ If the incoming symbol is an operator and has either lower precedence than
+the operator on the top of the stack, or has the same precedence as the operator
+on the top of the stack and is left associative -- continue to pop the stack
+until this is not true. Then, push the incoming operator.
+}
+begin
+  begin
+    while (FOperatorStack.Count > 0) and (OperatorPrecedence(token) <=
+      OperatorPrecedence(FOperatorStack.Peek)) do
+    begin
+      FOutputQueue.Enqueue(FOperatorStack.Pop);
+    end;
+    FOperatorStack.Push(token);
+  end;
+end;
+
+procedure TShuntingYardParser.ProcessRightParenthesis;
+{ If the incoming symbol is a right parenthesis: discard the right parenthesis,
+pop stack symbols and add them to the output queue until there is a left parenthesis
+in the operator stack. Pop the left parenthesis and discard it.}
+begin
+  begin
+    while (FOperatorStack.Count > 0) and (FOperatorStack.Peek <> '(') do
+    begin
+      FOutputQueue.Enqueue(FOperatorStack.Pop);
+    end;
+    if (FOperatorStack.Count > 0) and (FOperatorStack.Peek = '(') then
+    begin
+      FOperatorStack.Pop;
+    end;
+  end
+end;
+
 function TShuntingYardParser.ConvertToPostfix: TStringQueue;
 var
   token: string;
@@ -99,20 +135,12 @@ begin
       FOutputQueue.Enqueue(token);
     end
     else if token = '(' then
-      FOperatorStack.Push(token)
-    else if token = ')' then
-    { If the incoming symbol is a right parenthesis: discard the right parenthesis,
-    pop stack symbols and add them to the output queue until there is a left parenthesis
-    in the operator stack. Pop the left parenthesis and discard it.}
     begin
-      while (FOperatorStack.Count > 0) and (FOperatorStack.Peek <> '(') do
-      begin
-        FOutputQueue.Enqueue(FOperatorStack.Pop);
-      end;
-      if (FOperatorStack.Count > 0) and (FOperatorStack.Peek = '(') then
-      begin
-        FOperatorStack.Pop;
-      end;
+      FOperatorStack.Push(token)
+    end
+    else if token = ')' then
+    begin
+      ProcessRightParenthesis
     end
     else if (FOperatorStack.Count = 0) or
             (FOperatorStack.Peek = '(') or
@@ -120,20 +148,10 @@ begin
     { If the incoming symbol is an operator and has either higher precedence than
     the operator on the top of the stack, or if the stack is empty, or if the top
     of the stack is "(" (a floor) -- push it on the stack.}
-      FOperatorStack.Push(token)
-    else
-    { If the incoming symbol is an operator and has either lower precedence than
-    the operator on the top of the stack, or has the same precedence as the operator
-    on the top of the stack and is left associative -- continue to pop the stack
-    until this is not true. Then, push the incoming operator.
-    }
     begin
-      while (FOperatorStack.Count > 0) and (OperatorPrecedence(token) <= OperatorPrecedence(FOperatorStack.Peek)) do
-      begin
-        FOutputQueue.Enqueue(FOperatorStack.Pop);
-      end;
-      FOperatorStack.Push(token);
-    end;
+      FOperatorStack.Push(token)
+    end
+    else ProcessLowPriorityOperator(token);
   end;
 
   {Pop any remaining operators and add them to the output queue.
