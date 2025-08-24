@@ -7,7 +7,7 @@ uses
   Classes, SysUtils;
 
 type
-  TokenizerState = (NewToken, IntegerToken, DashToken, RealNumToken, AlphaToken);
+  TokenizerState = (NewToken, IntegerToken, DashToken, RealNumToken, AlphaToken, AtToken);
 
   { TTokenizer }
 
@@ -23,6 +23,7 @@ type
       procedure ParseAlphaToken(ch: char);
       procedure ParseError;
       procedure ProcessWhitespace;
+      procedure ParseAtToken(ch: char);
     public
       constructor Create(InputString: string);
       function ParseTokens: TStringList;
@@ -53,6 +54,7 @@ begin
       DashToken: ParseDashToken(ch);
       RealNumToken: ParseRealNumToken(ch);
       AlphaToken: ParseAlphaToken(ch);
+      AtToken: ParseAtToken(ch);
       else
         FTokenList.Add('unknown token');
     end;
@@ -76,6 +78,18 @@ begin
   FTokenList.Add(FToken);
   FToken := '';
   FCurrentState := NewToken;
+end;
+
+procedure TTokenizer.ParseAtToken(ch: char);
+begin
+  if ch = ' ' then ProcessWhitespace
+  else
+  begin
+    FTokenList.Add(FToken);
+    FTokenList.Add(ch);
+    FToken := '';
+    FCurrentState := NewToken;
+  end;
 end;
 
 procedure TTokenizer.ParseNewToken(ch: char);
@@ -102,6 +116,12 @@ begin
         FCurrentState := AlphaToken;
         ParseAlphaToken(ch);
       end;
+    '@':
+      begin
+        FTokenList.Add(ch);
+        FToken := '';
+        FCurrentState := AtToken;
+      end
     else
       begin
         FTokenList.Add(ch);
