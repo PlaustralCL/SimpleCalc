@@ -107,6 +107,7 @@ begin
     begin
       FOutputQueue.Enqueue(FOperatorStack.Pop);
     end;
+    // Remove the left parenthesis
     if (FOperatorStack.Count > 0) and (FOperatorStack.Peek = '(') then
     begin
       FOperatorStack.Pop;
@@ -132,7 +133,7 @@ begin
     end
     else if token = ')' then
     begin
-      ProcessRightParenthesis
+      ProcessRightParenthesis;
     end
     else if (FOperatorStack.Count = 0) or
             (FOperatorStack.Peek = '(') or
@@ -145,6 +146,8 @@ begin
     end
     else ProcessLowPriorityOperator(token);
   end;
+
+  ProcessRightParenthesis;
 
   {Pop any remaining operators and add them to the output queue.
    No parentheses should remain.}
