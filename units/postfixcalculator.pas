@@ -3,8 +3,6 @@ unit PostFixCalculator;
 {$mode ObjFPC}{$H+}
 
 interface
-
-
 uses
   Classes, SysUtils, Generics.Collections;
 
@@ -13,6 +11,8 @@ Type
   TStringQueue = specialize TQueue<string>;
 
 type
+
+  EUnknownOperatorError = class(Exception) end;
 
   { TFloatStack }
 
@@ -112,9 +112,13 @@ begin
     begin
       FOperandStack.Push(NumberToken);
     end
-    else if token = '+' then
+    else
     begin
-      Add;
+      case token of
+      '+': Add;
+      else
+        raise EUnknownOperatorError.Create('Unknown operator: ' + token);
+      end;
     end;
   end;
   FAns := FOperandStack.Pop;
