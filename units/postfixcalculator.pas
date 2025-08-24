@@ -115,6 +115,10 @@ begin
     begin
       FOperandStack.Push(NumberToken);
     end
+    else if token = '@' then
+    begin
+      FOperandStack.Push(FAns);
+    end
     else
     begin
       case token of

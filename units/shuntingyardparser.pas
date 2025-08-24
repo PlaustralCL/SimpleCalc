@@ -60,7 +60,7 @@ function TShuntingYardParser.IsNumber(token: string): boolean;
 var
   f: double;
 begin
-  IsNumber := TryStrToFloat(token, f);
+  IsNumber := (TryStrToFloat(token, f)) or (token = '@');
 end;
 
 function TShuntingYardParser.IsValidToken(token: string): boolean;

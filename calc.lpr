@@ -1,7 +1,7 @@
 program calc;
 
 uses Classes, SysUtils, Tokenizer,
-ShuntingYardParser, Generics.Collections, MathOperations;
+ShuntingYardParser, Generics.Collections, PostFixCalculator;
 
 Type
   TStringQueue = specialize TQueue<string>;
@@ -14,13 +14,16 @@ var
   TokenList: TStringList;
   IsDone: boolean;
   ShuntingYard: TShuntingYardParser;
-  PostFix: TStringQueue;
+  PostFixExpression: TStringQueue;
+  Calculator: TPostFixCalculator;
+  answer: double;
 
 
 begin
   IsDone := False;
 
   TestString := '111 aBc - -2.2/-.3';
+  Calculator := TPostFixCalculator.Create;
 
   repeat
     write('> ');
@@ -37,15 +40,15 @@ begin
     if not IsDone then
        begin
          ShuntingYard := TShuntingYardParser.Create(TokenList);
-         PostFix := ShuntingYard.ConvertToPostfix;
-         write('PostFix: ');
-         for x in PostFix do
-         begin
-           write(x, ' ');
+         PostFixExpression := ShuntingYard.ConvertToPostfix;
+         try
+           answer := Calculator.Calculate(PostFixExpression);
+           writeln(FloatToStr(answer));
+         except
+           on e: Exception do writeln('Error. ', e.Message);
          end;
-       end;
 
-    writeln('');
+       end;
 
   until IsDone;
 
