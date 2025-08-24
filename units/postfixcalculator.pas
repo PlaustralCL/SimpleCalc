@@ -4,7 +4,7 @@ unit PostFixCalculator;
 
 interface
 uses
-  Classes, SysUtils, Generics.Collections;
+  Classes, SysUtils, Generics.Collections, Math;
 
 Type
   TStringStack = specialize TStack<string>;
@@ -47,7 +47,7 @@ type
       procedure Subtract;
       procedure Divide;
       procedure Multiply;
-
+      procedure Power;
   end;
 
 implementation
@@ -122,6 +122,7 @@ begin
       '-': Subtract;
       '*': Multiply;
       '/': Divide;
+      '^': Power;
       else
         raise EUnknownOperatorError.Create('Unknown operator: ' + token);
       end;
@@ -170,6 +171,15 @@ begin
   right := FOperandStack.Pop;
   left := FOperandStack.Pop;
   FOperandStack.Push(left * right);
+end;
+
+procedure TPostFixCalculator.Power;
+var
+  right, left: double;
+begin
+  right := FOperandStack.Pop;
+  left := FOperandStack.Pop;
+  FOperandStack.Push(left**right);
 end;
 
 end.
