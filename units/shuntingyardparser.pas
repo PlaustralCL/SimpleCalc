@@ -89,11 +89,6 @@ begin
 end;
 
 procedure TShuntingYardParser.ProcessLowPriorityOperator(const token: string);
-{ If the incoming symbol is an operator and has either lower precedence than
-the operator on the top of the stack, or has the same precedence as the operator
-on the top of the stack and is left associative -- continue to pop the stack
-until this is not true. Then, push the incoming operator.
-}
 begin
   begin
     while (FOperatorStack.Count > 0) and (OperatorPrecedence(token) <=
@@ -106,9 +101,6 @@ begin
 end;
 
 procedure TShuntingYardParser.ProcessRightParenthesis;
-{ If the incoming symbol is a right parenthesis: discard the right parenthesis,
-pop stack symbols and add them to the output queue until there is a left parenthesis
-in the operator stack. Pop the left parenthesis and discard it.}
 begin
   begin
     while (FOperatorStack.Count > 0) and (FOperatorStack.Peek <> '(') do

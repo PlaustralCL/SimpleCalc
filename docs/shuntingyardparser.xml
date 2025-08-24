@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="calc"><module name="ShuntingYardParser"><element name="TShuntingYardParser.ProcessRightParenthesis"><short>Process right parenthesis during shunting yard algorithm.</short><descr>If the incoming symbol is a right parenthesis: discard the right parenthesis, pop stack symbols and add them to the output queue until there is a left parenthesis in the operator stack. Pop the left parenthesis and discard it.
+</descr>
+      </element><element name="TShuntingYardParser.ProcessLowPriorityOperator"><short>Process operators the lower precedence than the operator on top of the stack.</short><descr>If the incoming symbol is an operator and has either lower precedence than the operator on the top of the stack, or has the same precedence as the operator on the top of the stack and is left associative -- continue to pop the stack until this is not true. Then, push the incoming operator.
+</descr>
+      </element><element name="TShuntingYardParser.IsNumber"><short>Determine if a string is a number</short><descr>Determines if a string is a number by trying to convert it to a float.
+<b>Return:</b> True if the string can be converted to a number (float), false otherwise.
+</descr>
+      </element>
+    <element name="TShuntingYardParser.ConvertToPostfix"><short>Convert TSTringQueue to a queue in postfix notation</short><descr>Uses the Shunting Yard algorithm to convert the string of tokens to a queue that represents the corresponding postfix notation.
+
+<p>Based on the decription of the shunting yard algorithm at <link id="https://mathcenter.oxford.emory.edu/site/cs171/shuntingYardAlgorithm/"/>
+          </p>
+        </descr>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>
