@@ -102,17 +102,15 @@ end;
 
 procedure TShuntingYardParser.ProcessRightParenthesis;
 begin
+  while (FOperatorStack.Count > 0) and (FOperatorStack.Peek <> '(') do
   begin
-    while (FOperatorStack.Count > 0) and (FOperatorStack.Peek <> '(') do
-    begin
-      FOutputQueue.Enqueue(FOperatorStack.Pop);
-    end;
-    // Remove the left parenthesis
-    if (FOperatorStack.Count > 0) and (FOperatorStack.Peek = '(') then
-    begin
-      FOperatorStack.Pop;
-    end;
-  end
+    FOutputQueue.Enqueue(FOperatorStack.Pop);
+  end;
+  // Remove the left parenthesis
+  if (FOperatorStack.Count > 0) and (FOperatorStack.Peek = '(') then
+  begin
+    FOperatorStack.Pop;
+  end;
 end;
 
 function TShuntingYardParser.ConvertToPostfix: TStringQueue;
@@ -123,28 +121,34 @@ begin
   begin
     // Source: https://mathcenter.oxford.emory.edu/site/cs171/shuntingYardAlgorithm/
     // TODO: Need to ensure it is a valid token (number or valid operator or parenthesis)
-    if IsNumber(token) then
+
+    // An empty string was being passed, which caused problems. This check
+    // prevents an empty string from being processed.
+    if token <> '' then
     begin
-      FOutputQueue.Enqueue(token);
-    end
-    else if token = '(' then
-    begin
-      FOperatorStack.Push(token)
-    end
-    else if token = ')' then
-    begin
-      ProcessRightParenthesis;
-    end
-    else if (FOperatorStack.Count = 0) or
-            (FOperatorStack.Peek = '(') or
-            (OperatorPrecedence(token) > OperatorPrecedence(FOperatorStack.Peek)) then
-    { If the incoming symbol is an operator and has either higher precedence than
-    the operator on the top of the stack, or if the stack is empty, or if the top
-    of the stack is "(" (a floor) -- push it on the stack.}
-    begin
-      FOperatorStack.Push(token)
-    end
-    else ProcessLowPriorityOperator(token);
+      if IsNumber(token) then
+      begin
+        FOutputQueue.Enqueue(token);
+      end
+      else if token = '(' then
+      begin
+        FOperatorStack.Push(token)
+      end
+      else if token = ')' then
+      begin
+        ProcessRightParenthesis;
+      end
+      else if (FOperatorStack.Count = 0) or
+              (FOperatorStack.Peek = '(') or
+              (OperatorPrecedence(token) > OperatorPrecedence(FOperatorStack.Peek)) then
+      { If the incoming symbol is an operator and has either higher precedence than
+      the operator on the top of the stack, or if the stack is empty, or if the top
+      of the stack is "(" (a floor) -- push it on the stack.}
+      begin
+        FOperatorStack.Push(token)
+      end
+      else ProcessLowPriorityOperator(token);
+    end;
   end;
 
   ProcessRightParenthesis;
