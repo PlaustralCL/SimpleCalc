@@ -10,10 +10,11 @@
         <MainUnitHasScaledStatement Value="False"/>
       </Flags>
       <SessionStorage Value="InProjectDir"/>
-      <Title Value="calc"/>
+      <Title Value="simplecalc"/>
       <UseAppBundle Value="False"/>
       <ResourceType Value="res"/>
     </General>
+    <LazDoc Paths="docs"/>
     <BuildModes>
       <Item Name="Default" Default="True"/>
     </BuildModes>
@@ -26,7 +27,7 @@
     </RunParams>
     <Units>
       <Unit>
-        <Filename Value="calc.lpr"/>
+        <Filename Value="simplecalc.lpr"/>
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>
@@ -54,13 +55,18 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="MathOperations"/>
       </Unit>
+      <Unit>
+        <Filename Value="units\postfixcalculator.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="PostFixCalculator"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="11"/>
     <PathDelim Value="\"/>
     <Target>
-      <Filename Value="calc"/>
+      <Filename Value="simplecalc"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>

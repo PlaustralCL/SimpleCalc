@@ -1,4 +1,4 @@
-program calc;
+program simplecalc;
 
 uses Classes, SysUtils, Tokenizer,
 ShuntingYardParser, Generics.Collections, PostFixCalculator;
