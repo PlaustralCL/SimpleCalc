@@ -13,6 +13,7 @@ Type
 type
 
   EUnknownOperatorError = class(Exception) end;
+  EDivideByZeroError = class(Exception) end;
 
   { TFloatStack }
 
@@ -43,6 +44,8 @@ type
       FOperandStack: TFloatStack;
       FAns: double;
       procedure Add;
+      procedure Subtract;
+      procedure Divide;
       procedure Multiply;
 
   end;
@@ -116,6 +119,9 @@ begin
     begin
       case token of
       '+': Add;
+      '-': Subtract;
+      '*': Multiply;
+      '/': Divide;
       else
         raise EUnknownOperatorError.Create('Unknown operator: ' + token);
       end;
@@ -134,9 +140,36 @@ begin
   FOperandStack.Push(left + right);
 end;
 
-procedure TPostFixCalculator.Multiply;
+procedure TPostFixCalculator.Subtract;
+var
+  right, left: double;
 begin
+  right := FOperandStack.Pop;
+  left := FOperandStack.Pop;
+  FOperandStack.Push(left - right);
+end;
 
+procedure TPostFixCalculator.Divide;
+var
+  right, left: double;
+begin
+  right := FOperandStack.Pop;
+  left := FOperandStack.Pop;
+  if right = 0 then
+  begin
+    raise EDivideByZeroError.Create('Divide by Zero');
+  end;
+  FOperandStack.Push(left / right);
+
+end;
+
+procedure TPostFixCalculator.Multiply;
+var
+  right, left: double;
+begin
+  right := FOperandStack.Pop;
+  left := FOperandStack.Pop;
+  FOperandStack.Push(left * right);
 end;
 
 end.
