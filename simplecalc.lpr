@@ -21,9 +21,10 @@ var
 
 begin
   IsDone := False;
-
-  TestString := '111 aBc - -2.2/-.3';
   Calculator := TPostFixCalculator.Create;
+
+  writeln('Simple Calculator');
+  writeln('Type "quit" to exit, "@" to use the result of the previous calculation.');
 
   repeat
     write('> ');
