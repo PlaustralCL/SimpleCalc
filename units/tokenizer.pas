@@ -147,6 +147,12 @@ begin
         FCurrentState := AlphaToken;
         ParseAlphaToken(ch);
       end;
+    '@':
+      begin
+        FTokenList.Add(ch);
+        FToken := '';
+        FCurrentState := AtToken;
+      end
     else
       begin
         FTokenList.Add(FToken);
@@ -169,6 +175,12 @@ begin
         FCurrentState := AlphaToken;
         ParseAlphaToken(ch);
       end;
+    '@':
+      begin
+        FTokenList.Add(ch);
+        FToken := '';
+        FCurrentState := AtToken;
+      end
     else
       begin
         FTokenList.Add(FToken);
@@ -206,6 +218,12 @@ begin
         FCurrentState := AlphaToken;
         ParseAlphaToken(ch);
       end;
+    '@':
+      begin
+        FTokenList.Add(ch);
+        FToken := '';
+        FCurrentState := AtToken;
+      end
     else
       begin
         FTokenList.Add(FToken);
@@ -228,6 +246,12 @@ begin
       begin
         FToken := FToken + ch;
       end;
+      '@':
+      begin
+        FTokenList.Add(ch);
+        FToken := '';
+        FCurrentState := AtToken;
+      end
     else
       begin
         FTokenList.Add(FToken);
