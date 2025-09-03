@@ -8,8 +8,7 @@ Type
 
 
 var
-  InputString, token, TestString, x: string;
-  i, j: integer;
+  InputString, token: string;
   TokenParser: TTokenizer;
   TokenList: TStringList;
   IsDone: boolean;

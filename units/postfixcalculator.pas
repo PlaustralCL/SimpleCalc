@@ -7,7 +7,6 @@ uses
   Classes, SysUtils, Generics.Collections, Math;
 
 Type
-  TStringStack = specialize TStack<string>;
   TStringQueue = specialize TQueue<string>;
 
 type
