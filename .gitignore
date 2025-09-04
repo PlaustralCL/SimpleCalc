@@ -5,3 +5,4 @@ lib/
 *.o
 *.ppu
 *.ini
+*.compiled
