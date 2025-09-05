@@ -37,6 +37,7 @@ type
   TPostFixCalculator = class
     public
       constructor Create;
+      destructor Destroy; override;
       function Calculate(PostFixExpression: TStringQueue): double;
 
     private
@@ -102,16 +103,19 @@ begin
   FAns := 0;
 end;
 
+destructor TPostFixCalculator.Destroy;
+begin
+  inherited Destroy;
+  FreeAndNil(FOperandStack);
+end;
+
 function TPostFixCalculator.Calculate(PostFixExpression: TStringQueue): double;
 var
   token: string;
   NumberToken: double;
-  Item: string;
 begin
-  //while PostFixExpression.Count > 0 do
-  for Item in PostFixExpression do
+  for token in PostFixExpression do
   begin
-    token := PostFixExpression.Dequeue;
     if TryStrToFloat(token, NumberToken) then
     begin
       FOperandStack.Push(NumberToken);
@@ -134,8 +138,8 @@ begin
     end;
   end;
   FAns := FOperandStack.Pop;
-  PostFixExpression.Clear;
   Calculate := FAns;
+  FreeAndNil(PostFixExpression);
 end;
 
 procedure TPostFixCalculator.Add;

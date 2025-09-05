@@ -26,6 +26,7 @@ type
       procedure ParseAtToken(ch: char);
     public
       constructor Create(InputString: string);
+      destructor Destroy; override;
       function ParseTokens: TStringList;
   end;
 
@@ -40,6 +41,12 @@ begin
   FTokenList := TStringList.Create;
   FToken := '';
   FCurrentState := NewToken;
+end;
+
+destructor TTokenizer.Destroy;
+begin
+  inherited Destroy;
+  //FTokenList.Destroy;
 end;
 
 function TTokenizer.ParseTokens: TStringList;

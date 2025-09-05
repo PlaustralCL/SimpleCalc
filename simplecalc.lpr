@@ -41,6 +41,8 @@ begin
        begin
          ShuntingYard := TShuntingYardParser.Create(TokenList);
          PostFixExpression := ShuntingYard.ConvertToPostfix;
+         FreeAndNil(ShuntingYard);
+         FreeAndNil(TokenParser);
          try
            answer := Calculator.Calculate(PostFixExpression);
            writeln(FloatToStr(answer));
@@ -51,6 +53,12 @@ begin
        end;
 
   until IsDone;
+
+  FreeAndNil(Calculator);
+
+
+
+
 
 
   //TokenParser := TTokenizer.Create(TestString);
