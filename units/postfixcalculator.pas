@@ -106,8 +106,10 @@ function TPostFixCalculator.Calculate(PostFixExpression: TStringQueue): double;
 var
   token: string;
   NumberToken: double;
+  Item: string;
 begin
-  while PostFixExpression.Count > 0 do
+  //while PostFixExpression.Count > 0 do
+  for Item in PostFixExpression do
   begin
     token := PostFixExpression.Dequeue;
     if TryStrToFloat(token, NumberToken) then
@@ -132,6 +134,7 @@ begin
     end;
   end;
   FAns := FOperandStack.Pop;
+  PostFixExpression.Clear;
   Calculate := FAns;
 end;
 
