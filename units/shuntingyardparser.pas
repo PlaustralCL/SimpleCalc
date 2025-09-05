@@ -50,7 +50,7 @@ destructor TShuntingYardParser.Destroy;
 begin
   inherited Destroy;
   FreeAndNil(FOperatorStack);
-  //FreeAndNil(FOutputQueue);
+  FreeAndNil(FOutputQueue);
   FreeAndNil(FTokenList);
 end;
 

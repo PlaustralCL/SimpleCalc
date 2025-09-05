@@ -41,12 +41,12 @@ begin
        begin
          ShuntingYard := TShuntingYardParser.Create(TokenList);
          PostFixExpression := ShuntingYard.ConvertToPostfix;
-         FreeAndNil(ShuntingYard);
-         FreeAndNil(TokenParser);
+
          try
            answer := Calculator.Calculate(PostFixExpression);
            writeln(FloatToStr(answer));
-           FreeAndNil(PostFixExpression);
+           FreeAndNil(ShuntingYard); // Also frees PostFixExpression
+           FreeAndNil(TokenParser);
          except
            on e: Exception do writeln('Error. ', e.Message);
          end;
