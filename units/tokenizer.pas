@@ -46,7 +46,6 @@ end;
 destructor TTokenizer.Destroy;
 begin
   inherited Destroy;
-  //FTokenList.Destroy;
 end;
 
 function TTokenizer.ParseTokens: TStringList;

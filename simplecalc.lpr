@@ -46,6 +46,7 @@ begin
          try
            answer := Calculator.Calculate(PostFixExpression);
            writeln(FloatToStr(answer));
+           FreeAndNil(PostFixExpression);
          except
            on e: Exception do writeln('Error. ', e.Message);
          end;
@@ -54,6 +55,10 @@ begin
 
   until IsDone;
 
+  // TokenList and TokenParser freed here if the program is exited with the
+  // quit command.
+  FreeAndNil(TokenList);
+  FreeAndNil(TokenParser);
   FreeAndNil(Calculator);
 
 

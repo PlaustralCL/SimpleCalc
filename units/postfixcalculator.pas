@@ -139,7 +139,6 @@ begin
   end;
   FAns := FOperandStack.Pop;
   Calculate := FAns;
-  FreeAndNil(PostFixExpression);
 end;
 
 procedure TPostFixCalculator.Add;
