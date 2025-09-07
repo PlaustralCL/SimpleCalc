@@ -28,7 +28,7 @@ begin
   repeat
     write('> ');
     Readln(InputString);
-    if InputString = '' then continue;
+    if Trim(InputString) = '' then continue;
     TokenParser := TTokenizer.Create(InputString);
     TokenList := TokenParser.ParseTokens;
     for token in TokenList do
