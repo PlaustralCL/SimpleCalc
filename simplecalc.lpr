@@ -7,25 +7,47 @@ Type
   TStringQueue = specialize TQueue<string>;
 
 
+
 var
   InputString, token: string;
   TokenParser: TTokenizer;
   TokenList: TStringList;
-  IsDone: boolean;
+  IsDone, IsCalculation: boolean;
   ShuntingYard: TShuntingYardParser;
   PostFixExpression: TStringQueue;
   Calculator: TPostFixCalculator;
   answer: double;
 
-
+procedure PrintHelp;
+var
+  HelpFile: TextFile;
+  line: string;
 begin
+  AssignFile(HelpFile, 'help.txt');
+  try
+    Reset(HelpFile);
+    while not eof(HelpFile) do
+    begin
+      Readln(HelpFile, line);
+      writeln(line);
+    end;
+  except
+    on E: Exception do
+      writeln('Error reading file: ', E.Message);
+  end;
+  CloseFile(HelpFile);
+end;
+
+begin // main program block
   IsDone := False;
+
   Calculator := TPostFixCalculator.Create;
 
   writeln('Simple Calculator');
-  writeln('Type "quit" to exit, "@" to use the result of the previous calculation.');
+  writeln('Type "quit" to exit, "help" for more information.');
 
   repeat
+    IsCalculation := True;
     write('> ');
     Readln(InputString);
     if Trim(InputString) = '' then continue;
@@ -36,9 +58,16 @@ begin
       if token = 'quit' then
       begin
          IsDone := True;
+         IsCalculation := False;
+         Break;
+      end
+      else if token = 'help' then
+      begin
+         PrintHelp;
+         IsCalculation := False;
       end;
     end;
-    if not IsDone then
+    if IsCalculation then
        begin
          ShuntingYard := TShuntingYardParser.Create(TokenList);
          PostFixExpression := ShuntingYard.ConvertToPostfix;
@@ -51,7 +80,6 @@ begin
          except
            on e: Exception do writeln('Error. ', e.Message);
          end;
-
        end;
 
   until IsDone;

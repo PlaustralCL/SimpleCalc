@@ -123,6 +123,10 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="PostFixCalculator"/>
       </Unit>
+      <Unit>
+        <Filename Value="help.txt"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

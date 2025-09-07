@@ -1,0 +1,26 @@
+*********************************************************************
+Simple Calculator
+
+help - read this file
+quit - exit the program
+
+Math operations:
+  @ The result of the previous calculation. Initially set to 0.
+  + Addition
+  - Subtraction
+  / Real division. 10 / = 3.33333333333333
+  * Multiplication
+  ^ Exponentiation
+  % Modulo. Returns the remainder after division. 10 % 3 = 1
+  \ Integer division. 10 \ 3 = 3
+
+Order of operations follows the normal order in math or Python:
+  parentheses
+  exponents
+  multiplication, division, integer division, and modulo
+  addition and subtraction
+
+Where operators have the same precedence, they are evaluated from
+left to right.
+*********************************************************************
+
