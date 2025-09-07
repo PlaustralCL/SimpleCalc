@@ -1,12 +1,10 @@
 program simplecalc;
 
 uses Classes, SysUtils, Tokenizer,
-ShuntingYardParser, Generics.Collections, PostFixCalculator;
+ShuntingYardParser, Generics.Collections, PostFixCalculator, HelpFile;
 
 Type
   TStringQueue = specialize TQueue<string>;
-
-
 
 var
   InputString, token: string;
@@ -18,33 +16,13 @@ var
   Calculator: TPostFixCalculator;
   answer: double;
 
-procedure PrintHelp;
-var
-  HelpFile: TextFile;
-  line: string;
-begin
-  AssignFile(HelpFile, 'help.txt');
-  try
-    Reset(HelpFile);
-    while not eof(HelpFile) do
-    begin
-      Readln(HelpFile, line);
-      writeln(line);
-    end;
-  except
-    on E: Exception do
-      writeln('Error reading file: ', E.Message);
-  end;
-  CloseFile(HelpFile);
-end;
-
 begin // main program block
   IsDone := False;
 
   Calculator := TPostFixCalculator.Create;
 
   writeln('Simple Calculator');
-  writeln('Type "quit" to exit, "help" for more information.');
+  writeln('Type "quit" to exit or "help" for more information.');
 
   repeat
     IsCalculation := True;
