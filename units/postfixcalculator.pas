@@ -48,6 +48,8 @@ type
       procedure Divide;
       procedure Multiply;
       procedure Power;
+      procedure IntegerDivision;
+      procedure Modulo;
   end;
 
 implementation
@@ -132,6 +134,8 @@ begin
       '*': Multiply;
       '/': Divide;
       '^': Power;
+      '\': IntegerDivision;
+      '%': Modulo;
       else
         raise EUnknownOperatorError.Create('Unknown operator: ' + token);
       end;
@@ -170,7 +174,6 @@ begin
     raise EDivideByZeroError.Create('Divide by Zero');
   end;
   FOperandStack.Push(left / right);
-
 end;
 
 procedure TPostFixCalculator.Multiply;
@@ -189,6 +192,34 @@ begin
   right := FOperandStack.Pop;
   left := FOperandStack.Pop;
   FOperandStack.Push(left**right);
+end;
+
+procedure TPostFixCalculator.IntegerDivision;
+var
+  right, left: double;
+begin
+  right := FOperandStack.Pop;
+  left := FOperandStack.Pop;
+  if right = 0 then
+  begin
+    raise EDivideByZeroError.Create('Divide by Zero');
+  end;
+
+  FOperandStack.Push(Trunc(left / right));
+
+end;
+
+procedure TPostFixCalculator.Modulo;
+var
+  right, left: double;
+begin
+  right := FOperandStack.Pop;
+  left := FOperandStack.Pop;
+  if right = 0 then
+  begin
+    raise EDivideByZeroError.Create('Divide by Zero');
+  end;
+  FOperandStack.Push(left Mod right);
 end;
 
 end.

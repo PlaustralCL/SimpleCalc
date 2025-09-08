@@ -88,10 +88,8 @@ end;
 function TShuntingYardParser.OperatorPrecedence(token: string): integer;
 begin
   case token of
-    '+': OperatorPrecedence := 10;
-    '-': OperatorPrecedence := 10;
-    '*': OperatorPrecedence := 20;
-    '/': OperatorPrecedence := 20;
+    '+', '-': OperatorPrecedence := 10;
+    '*', '/', '\', '%': OperatorPrecedence := 20;
     '^': OperatorPrecedence := 30;
     else
       OperatorPrecedence := -1;

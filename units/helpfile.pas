@@ -37,6 +37,10 @@ begin
   writeln();
   writeln('Where operators have the same precedence, they are evaluated from');
   writeln('left to right.');
+  writeln('Whitespace does not impact the calculation.');
+  writeln('Negative number are processed as expected. However, you cannot negate');
+  writeln('a negative number back to postive. For example, --3 or -(-3) will');
+  writeln('throw an exception. Instead, multiply it by negative one: -1 * -3 = 3.');
   writeln('*********************************************************************');
 end;
 
