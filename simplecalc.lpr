@@ -1,7 +1,8 @@
 program simplecalc;
 
 uses Classes, SysUtils, Tokenizer,
-ShuntingYardParser, Generics.Collections, PostFixCalculator, HelpFile;
+ShuntingYardParser, Generics.Collections, PostFixCalculator, HelpFile,
+StringQueue;
 
 Type
   TStringQueue = specialize TQueue<string>;

@@ -3,7 +3,7 @@ program calctest;
 {$mode objfpc}{$H+}
 
 uses
-  Interfaces, Forms, GuiTestRunner, TestShuntingYard;
+  Interfaces, Forms, GuiTestRunner, TestShuntingYard, TestStringQueue;
 
 {$R *.res}
 

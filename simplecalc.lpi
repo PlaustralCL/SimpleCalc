@@ -132,6 +132,11 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="HelpFile"/>
       </Unit>
+      <Unit>
+        <Filename Value="units\stringqueue.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="StringQueue"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

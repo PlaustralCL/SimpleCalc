@@ -2,14 +2,16 @@
 <CONFIG>
   <ProjectGroup FileVersion="2">
     <Targets>
-      <Target FileName="calc.lpi">
+      <Target FileName="calctest.lpi">
         <BuildModes>
           <Mode Name="Default"/>
         </BuildModes>
       </Target>
-      <Target FileName="calctest.lpi">
+      <Target FileName="simplecalc.lpi">
         <BuildModes>
-          <Mode Name="Default"/>
+          <Mode Name="Default" Compile="True"/>
+          <Mode Name="Debug"/>
+          <Mode Name="Release"/>
         </BuildModes>
       </Target>
     </Targets>

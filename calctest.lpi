@@ -42,6 +42,11 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="TestShuntingYard"/>
       </Unit>
+      <Unit>
+        <Filename Value="tests\teststringqueue.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="TestStringQueue"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -79,6 +84,9 @@
       </Item>
       <Item>
         <Name Value="EAssertionFailedError"/>
+      </Item>
+      <Item>
+        <Name Value="EIndexError"/>
       </Item>
     </Exceptions>
   </Debugging>
