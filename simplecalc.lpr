@@ -30,14 +30,13 @@ begin // main program block
     Readln(InputString);
     if Trim(InputString) = '' then continue;
     TokenParser := TTokenizer.Create(InputString);
-    TokenList := TokenParser.ParseTokens;
+    TokenList := TokenParser.ParseTokens; // Freed as part of TokenParser
     for token in TokenList do
     begin
       if token = 'quit' then
       begin
          IsDone := True;
          IsCalculation := False;
-         Break;
       end
       else if token = 'help' then
       begin
@@ -46,50 +45,27 @@ begin // main program block
       end;
     end;
     if IsCalculation then
-       begin
-         ShuntingYard := TShuntingYardParser.Create(TokenList);
-         PostFixExpression := ShuntingYard.ConvertToPostfix;
-
-         try
-           answer := Calculator.Calculate(PostFixExpression);
-           writeln(FloatToStr(answer));
-           FreeAndNil(ShuntingYard); // Also frees PostFixExpression
-           FreeAndNil(TokenParser);
-         except
-           on e: Exception do
-           begin
-             writeln('Error. ', e.Message);
-             FreeAndNil(ShuntingYard);
-             FreeAndNil(TokenParser);
-           end
-
-
-         end;
-       end;
+    begin
+      ShuntingYard := TShuntingYardParser.Create(TokenList);
+      PostFixExpression := ShuntingYard.ConvertToPostfix;
+      try
+        try
+          answer := Calculator.Calculate(PostFixExpression);
+          writeln(FloatToStr(answer));
+        except
+          on e: Exception do
+          begin
+            writeln('Error. ', e.Message);
+          end;
+        end;
+      finally
+        FreeAndNil(ShuntingYard);
+      end;
+    end;
+    FreeAndNil(TokenParser);
 
   until IsDone;
 
-  // TokenList and TokenParser freed here if the program is exited with the
-  // quit command.
-  FreeAndNil(TokenList);
-  FreeAndNil(TokenParser);
   FreeAndNil(Calculator);
-
-
-
-
-
-
-  //TokenParser := TTokenizer.Create(TestString);
-  //TokenList := TokenParser.ParseTokens;
-  //writeln('TestString: ', TestString);
-  //for x in TokenList do
-  //    writeln(x);
-  //
-  //
-  //
-  //
-  //readln();
-
 
 end.

@@ -45,6 +45,7 @@ end;
 
 destructor TTokenizer.Destroy;
 begin
+  FreeAndNil(FTokenList);
   inherited Destroy;
 end;
 
