@@ -62,21 +62,25 @@ begin
   begin
     Dequeue;
   end;
-
+  Dispose(FHead);
+  // FTail is disposed during Dequeue
   inherited Destroy;
 end;
 
 procedure TStringQueue.Enqueue(token: string);
 var
-  Node: PNode;
+  NewNode: PNode;
 begin
-  New(Node);
-  Node^.Data := token;
-  Node^.Next := Nil;
-  FTail^.Next := Node;
-  FTail := Node;
   if FSize = 0 then
-     FHead^.Next := Node;
+    FTail^.Data := token
+  else
+  begin
+    New(NewNode);
+    NewNode^.Data := token;
+    NewNode^.Next := Nil;
+    FTail^.Next := NewNode;
+    FTail := NewNode;
+  end;
   Inc(FSize);
 end;
 

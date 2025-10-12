@@ -56,7 +56,14 @@ begin // main program block
            FreeAndNil(ShuntingYard); // Also frees PostFixExpression
            FreeAndNil(TokenParser);
          except
-           on e: Exception do writeln('Error. ', e.Message);
+           on e: Exception do
+           begin
+             writeln('Error. ', e.Message);
+             FreeAndNil(ShuntingYard);
+             FreeAndNil(TokenParser);
+           end
+
+
          end;
        end;
 
