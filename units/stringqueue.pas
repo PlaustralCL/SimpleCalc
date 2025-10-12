@@ -32,15 +32,9 @@ type
       function Peek: string;
       function IsEmpty: boolean;
       property Size: integer Read FSize;
-
-
-
-
   end;
 
 implementation
-
-
 
 { TStringQueue }
 
@@ -112,11 +106,6 @@ begin
     else
       isEmpty := False;
 end;
-
-
-
-
-
 
 
 end.
