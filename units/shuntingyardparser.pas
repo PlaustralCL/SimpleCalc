@@ -10,7 +10,6 @@ uses
 
 Type
   TStringStack = specialize TStack<string>;
-  //TStringQueue = specialize TQueue<string>;
 
 
   { TShuntingYardParser }
@@ -20,7 +19,6 @@ Type
       constructor Create(TokenList: TStringList);
       destructor Destroy; override;
       function ConvertToPostfix: TStringQueue;
-
 
     private
       FTokenList: TStringList;
@@ -36,7 +34,6 @@ Type
 
 implementation
 
-
 { TShuntingYardParser }
 
 constructor TShuntingYardParser.Create(TokenList: TStringList);
@@ -51,7 +48,6 @@ begin
   inherited Destroy;
   FreeAndNil(FOperatorStack);
   FreeAndNil(FOutputQueue);
-  FreeAndNil(FTokenList);
 end;
 
 function TShuntingYardParser.IsOperator(token: string): boolean;
