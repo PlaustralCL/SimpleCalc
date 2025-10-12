@@ -6,11 +6,11 @@ interface
 
 
 uses
-  Classes, SysUtils, Generics.Collections;
+  Classes, SysUtils, Generics.Collections, StringQueue;
 
 Type
   TStringStack = specialize TStack<string>;
-  TStringQueue = specialize TQueue<string>;
+  //TStringQueue = specialize TQueue<string>;
 
 
   { TShuntingYardParser }

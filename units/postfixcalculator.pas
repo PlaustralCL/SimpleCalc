@@ -4,10 +4,10 @@ unit PostFixCalculator;
 
 interface
 uses
-  Classes, SysUtils, Generics.Collections, Math;
+  Classes, SysUtils, Generics.Collections, Math, StringQueue;
 
-Type
-  TStringQueue = specialize TQueue<string>;
+//Type
+//  TStringQueue = specialize TQueue<string>;
 
 type
 
@@ -116,8 +116,11 @@ var
   token: string;
   NumberToken: double;
 begin
-  for token in PostFixExpression do
+//  TODO: Iterate over the queue until empty instead of using an iterator
+  //for token in PostFixExpression do
+  while not PostFixExpression.IsEmpty do
   begin
+    token := PostFixExpression.Dequeue;
     if TryStrToFloat(token, NumberToken) then
     begin
       FOperandStack.Push(NumberToken);

@@ -1,11 +1,10 @@
 program simplecalc;
 
 uses Classes, SysUtils, Tokenizer,
-ShuntingYardParser, Generics.Collections, PostFixCalculator, HelpFile,
-StringQueue;
+ShuntingYardParser, Generics.Collections, PostFixCalculator, HelpFile, StringQueue;
 
-Type
-  TStringQueue = specialize TQueue<string>;
+//Type
+//  TStringQueue = specialize TQueue<string>;
 
 var
   InputString, token: string;
