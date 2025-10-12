@@ -4,10 +4,7 @@ unit PostFixCalculator;
 
 interface
 uses
-  Classes, SysUtils, Generics.Collections, Math, StringQueue;
-
-//Type
-//  TStringQueue = specialize TQueue<string>;
+  Classes, SysUtils, Math, StringQueue;
 
 type
 
