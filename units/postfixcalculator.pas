@@ -113,8 +113,6 @@ var
   token: string;
   NumberToken: double;
 begin
-//  TODO: Iterate over the queue until empty instead of using an iterator
-  //for token in PostFixExpression do
   while not PostFixExpression.IsEmpty do
   begin
     token := PostFixExpression.Dequeue;
