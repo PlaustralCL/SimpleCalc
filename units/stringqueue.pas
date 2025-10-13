@@ -9,29 +9,31 @@ uses
 
 type
   PNode = ^TNode;
-  TNode = Record
+
+  TNode = record
     Data: string;
     Next: PNode;
   end;
 
-  EIndexError = class(Exception) end;
+  EIndexError = class(Exception)
+  end;
 
   { TStringQueue }
 
   TStringQueue = class
-    private
-      FSize: integer;
-      FHead: PNode;
-      FTail: PNode;
+  private
+    FSize: integer;
+    FHead: PNode;
+    FTail: PNode;
 
-    public
-      constructor Create;
-      destructor Destroy; override;
-      procedure Enqueue(token: string);
-      function Dequeue: string;
-      function Peek: string;
-      function IsEmpty: boolean;
-      property Size: integer Read FSize;
+  public
+    constructor Create;
+    destructor Destroy; override;
+    procedure Enqueue(token: string);
+    function Dequeue: string;
+    function Peek: string;
+    function IsEmpty: boolean;
+    property Size: integer read FSize;
   end;
 
 implementation
@@ -40,13 +42,13 @@ implementation
 
 constructor TStringQueue.Create;
 begin
-    FSize := 0;
-    New(FTail);
-    New(FHead);
-    FTail^.Data := '';
-    FTail^.Next := nil;
-    FHead^.Data := '';
-    FHead^.Next := FTail;
+  FSize := 0;
+  New(FTail);
+  New(FHead);
+  FTail^.Data := '';
+  FTail^.Next := nil;
+  FHead^.Data := '';
+  FHead^.Next := FTail;
 
 end;
 
@@ -71,7 +73,7 @@ begin
   begin
     New(NewNode);
     NewNode^.Data := token;
-    NewNode^.Next := Nil;
+    NewNode^.Next := nil;
     FTail^.Next := NewNode;
     FTail := NewNode;
   end;
@@ -84,7 +86,7 @@ var
 begin
   if FSize = 0 then raise EIndexError.Create('Empty Queue');
   FirstNode := FHead^.Next;
-  Dequeue := FirstNode^.Data;
+  Result := FirstNode^.Data;
   FHead^.Next := FirstNode^.Next;
   Dispose(FirstNode);
   Dec(FSize);
@@ -96,17 +98,16 @@ var
 begin
   if FSize = 0 then raise EIndexError.Create('Empty Queue');
   FirstNode := FHead^.Next;
-  Peek := FirstNode^.Data;
+  Result := FirstNode^.Data;
 end;
 
 function TStringQueue.IsEmpty: boolean;
 begin
-    if FSize = 0 then
-       IsEmpty := True
-    else
-      isEmpty := False;
+  if FSize = 0 then
+    Result := True
+  else
+    Result := False;
 end;
 
 
 end.
-
