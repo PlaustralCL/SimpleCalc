@@ -5,7 +5,7 @@ unit TestShuntingYard;
 interface
 
 uses
-  Classes, SysUtils, fpcunit, testutils, testregistry, ShuntingYardParser;
+  Classes, SysUtils, fpcunit, testutils, testregistry, ShuntingYardParser, StringQueue;
 
 type
 
@@ -46,12 +46,12 @@ begin
   ShuntingYard := TShuntingYardParser.Create(TokenList);
   Actual := ShuntingYard.ConvertToPostfix;
 
-  AssertEquals(Length(Expected), Actual.Count);
+  AssertEquals(Length(Expected), Actual.Size);
   for Token in Expected do
   begin
     AssertEquals(Token, Actual.Dequeue);
   end;
-  AssertEquals(0, Actual.Count);
+  AssertEquals(0, Actual.Size);
 
   FreeAndNil(Actual);
   FreeAndNil(TokenList);
@@ -73,12 +73,12 @@ begin
   ShuntingYard := TShuntingYardParser.Create(TokenList);
   Actual := ShuntingYard.ConvertToPostfix;
 
-  AssertEquals(Length(Expected), Actual.Count);
+  AssertEquals(Length(Expected), Actual.Size);
   for Token in Expected do
   begin
     AssertEquals(Token, Actual.Dequeue);
   end;
-  AssertEquals(0, Actual.Count);
+  AssertEquals(0, Actual.Size);
 
   FreeAndNil(Actual);
   FreeAndNil(TokenList);
@@ -100,12 +100,12 @@ begin
   ShuntingYard := TShuntingYardParser.Create(TokenList);
   Actual := ShuntingYard.ConvertToPostfix;
 
-  AssertEquals(Length(Expected), Actual.Count);
+  AssertEquals(Length(Expected), Actual.Size);
   for Token in Expected do
   begin
     AssertEquals(Token, Actual.Dequeue);
   end;
-  AssertEquals(0, Actual.Count);
+  AssertEquals(0, Actual.Size);
 
   FreeAndNil(Actual);
   FreeAndNil(TokenList);
@@ -127,12 +127,12 @@ begin
   ShuntingYard := TShuntingYardParser.Create(TokenList);
   Actual := ShuntingYard.ConvertToPostfix;
 
-  AssertEquals(Length(Expected), Actual.Count);
+  AssertEquals(Length(Expected), Actual.Size);
   for Token in Expected do
   begin
     AssertEquals(Token, Actual.Dequeue);
   end;
-  AssertEquals(0, Actual.Count);
+  AssertEquals(0, Actual.Size);
 
   FreeAndNil(Actual);
   FreeAndNil(TokenList);
@@ -154,12 +154,12 @@ begin
   ShuntingYard := TShuntingYardParser.Create(TokenList);
   Actual := ShuntingYard.ConvertToPostfix;
 
-  AssertEquals(Length(Expected), Actual.Count);
+  AssertEquals(Length(Expected), Actual.Size);
   for Token in Expected do
   begin
     AssertEquals(Token, Actual.Dequeue);
   end;
-  AssertEquals(0, Actual.Count);
+  AssertEquals(0, Actual.Size);
 
   FreeAndNil(Actual);
   FreeAndNil(TokenList);
@@ -182,12 +182,12 @@ begin
   Actual := ShuntingYard.ConvertToPostfix;
 
 
-  AssertEquals(Length(Expected), Actual.Count);
+  AssertEquals(Length(Expected), Actual.Size);
   for Token in Expected do
   begin
     AssertEquals(Token, Actual.Dequeue);
   end;
-  AssertEquals(0, Actual.Count);
+  AssertEquals(0, Actual.Size);
 
   FreeAndNil(Actual);
   FreeAndNil(TokenList);
