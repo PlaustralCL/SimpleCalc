@@ -10,7 +10,7 @@ var
   InputString, token: string;
   TokenParser: TTokenizer;
   TokenList: TStringList;
-  IsDone, IsCalculation: boolean;
+  IsDone, IsCalculation, HasValidTokens: boolean;
   ShuntingYard: TShuntingYardParser;
   PostFixExpression: TStringQueue;
   Calculator: TPostFixCalculator;
@@ -25,25 +25,43 @@ begin // main program block
   writeln('Type "quit" to exit or "help" for more information.');
 
   repeat
-    IsCalculation := True;
+    HasValidTokens := True;
+    IsCalculation := False;
     write('> ');
     Readln(InputString);
     if Trim(InputString) = '' then continue;
     TokenParser := TTokenizer.Create(InputString);
-    TokenList := TokenParser.ParseTokens; // Freed as part of TokenParser
-    for token in TokenList do
-    begin
-      if token = 'quit' then
+    try
+      TokenList := TokenParser.ParseTokens; // Freed as part of TokenParser
+    except
+      on e: Exception do
       begin
-         IsDone := True;
-         IsCalculation := False;
-      end
-      else if token = 'help' then
-      begin
-         PrintHelp;
-         IsCalculation := False;
+        writeln('Error. ', e.Message);
+        HasValidTokens := False;
       end;
     end;
+
+    if HasValidTokens then
+    begin
+      for token in TokenList do
+      begin
+        if token = 'quit' then
+        begin
+           IsDone := True;
+           IsCalculation := False;
+        end
+        else if token = 'help' then
+        begin
+           PrintHelp;
+           IsCalculation := False;
+        end
+        else
+        begin
+          IsCalculation := True;
+        end;
+      end;
+    end;
+
     if IsCalculation then
     begin
       ShuntingYard := TShuntingYardParser.Create(TokenList);

@@ -9,6 +9,8 @@ uses
 type
   TokenizerState = (NewToken, IntegerToken, DashToken, RealNumToken, AlphaToken, AtToken);
 
+  ETokenError = class(Exception) end;
+
   { TTokenizer }
 
   TTokenizer = class
@@ -170,6 +172,7 @@ begin
   end;
 end;
 
+{ ParseRealNumToken only occurs after a decimal point has been identified.}
 procedure TTokenizer.ParseRealNumToken(ch: char);
 begin
   case ch of
@@ -187,6 +190,10 @@ begin
         FTokenList.Add(ch);
         FToken := '';
         FCurrentState := AtToken;
+      end;
+    '.':
+      begin
+        raise ETokenError.Create('Too many decimal points');
       end
     else
       begin
