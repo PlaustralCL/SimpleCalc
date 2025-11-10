@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<fpdoc-descriptions>
+<package name="simplecalc">
+
+<!--
+  ====================================================================
+    StringQueue
+  ====================================================================
+-->
+
+<module name="StringQueue">
+<short>A first-in, first-out queue for strings</short>
+<descr>
+A first-in, first-out queue for strings, implemented as a linked list with head and
+tail pointers. New elements are added to the tail and elements are removed from
+the head.
+</descr>
+
+<!-- uses unit Visibility: default -->
+<element name="Classes">
+<short></short>
+</element>
+
+<!-- uses unit Visibility: default -->
+<element name="SysUtils">
+<short></short>
+</element>
+
+<!-- pointer type Visibility: default -->
+<element name="PNode">
+<short>Pointer for a TNode record</short>
+<descr>
+</descr>
+<seealso>
+</seealso>
+</element>
+
+<!-- record type Visibility: default -->
+<element name="TNode">
+<short>Record storing the string data and a pointer to the next record in the queue.</short>
+<descr>
+</descr>
+<seealso>
+</seealso>
+</element>
+
+<!-- variable Visibility: default -->
+<element name="TNode.Data">
+<short>A string in the queue.</short>
+</element>
+
+<!-- variable Visibility: default -->
+<element name="TNode.Next">
+<short>Pointer, PNode, to the next node in the queue.</short>
+</element>
+
+<!-- class Visibility: default -->
+<element name="EIndexError">
+<short></short>
+<descr>
+</descr>
+<errors>
+</errors>
+<seealso>
+</seealso>
+</element>
+
+<!-- class Visibility: default -->
+<element name="TStringQueue">
+<short>A first-in, first-out queue for strings</short>
+<descr>
+A first-in, first-out queue for strings, implemented as a linked list with head and
+tail pointers. New elements are added to the tail and elements are removed from
+the head.
+</descr>
+<errors>
+</errors>
+<seealso>
+</seealso>
+</element>
+
+<!-- variable Visibility: private -->
+<element name="TStringQueue.FSize">
+<short>Number of elements in the queue.</short>
+<descr>
+</descr>
+<seealso>
+</seealso>
+</element>
+
+<!-- variable Visibility: private -->
+<element name="TStringQueue.FHead">
+<short>Pointer to the head of the queue.</short>
+<descr>
+</descr>
+<seealso>
+</seealso>
+</element>
+
+<!-- variable Visibility: private -->
+<element name="TStringQueue.FTail">
+<short>Pointer to the tail of the queue.</short>
+<descr>
+</descr>
+<seealso>
+</seealso>
+</element>
+
+<!-- constructor Visibility: public -->
+<element name="TStringQueue.Create">
+<short>Create a new TStringQueue</short>
+<descr>
+Create a new TStringQueue that is empty. The number of elemments in the queue is
+initialized to zero.
+</descr>
+<errors>
+</errors>
+<seealso>
+</seealso>
+</element>
+
+<!-- destructor Visibility: public -->
+<element name="TStringQueue.Destroy">
+<short>Destroy the TStringQueue instance</short>
+<descr>
+If the queue is not empty, dequeue all elments and dispose of the head pointer.
+</descr>
+<errors>
+</errors>
+<seealso>
+</seealso>
+</element>
+
+<!-- procedure Visibility: public -->
+<element name="TStringQueue.Enqueue">
+<short>Add a new element to the queue</short>
+<descr>
+Add a new element to the queue and increment the number queue elements.
+</descr>
+<errors>
+</errors>
+<seealso>
+</seealso>
+</element>
+
+<!-- argument Visibility: default -->
+<element name="TStringQueue.Enqueue.token">
+<short>The string that will be added to the queue</short>
+</element>
+
+<!-- function Visibility: public -->
+<element name="TStringQueue.Dequeue">
+<short>Remove the next element in the queue and return its data.</short>
+<descr>
+Remove the next element in the queue and returns its data. D1ecrements the number
+of elements in the queue.
+</descr>
+<errors>
+Raises EIndexError if an attempt is made to dequeue from an empty queue.
+</errors>
+<seealso>
+</seealso>
+</element>
+
+<!-- function result Visibility: default -->
+<element name="TStringQueue.Dequeue.Result">
+<short>The string that was removed from the queue.</short>
+</element>
+
+<!-- function Visibility: public -->
+<element name="TStringQueue.Peek">
+<short>Return the string at the front of the queue without removing it.</short>
+<descr>
+Return the string at the front of the queue without removing it. There is no impact
+on the number elements in the queue.
+</descr>
+<errors>
+Raises EIndexError if an attempt is made to peek from an empty queue.
+</errors>
+<seealso>
+</seealso>
+</element>
+
+<!-- function result Visibility: default -->
+<element name="TStringQueue.Peek.Result">
+<short>The string at the front of the queue.</short>
+</element>
+
+<!-- function Visibility: public -->
+<element name="TStringQueue.IsEmpty">
+<short>Returns true if the queue is empty, false otherwise.</short>
+<descr>
+</descr>
+<errors>
+</errors>
+<seealso>
+</seealso>
+</element>
+
+<!-- function result Visibility: default -->
+<element name="TStringQueue.IsEmpty.Result">
+<short>Returns true if the queue is empty, false otherwise.</short>
+</element>
+
+<!-- property Visibility: public -->
+<element name="TStringQueue.Size">
+<short>Returns the number of elements in the queue.</short>
+<descr>
+</descr>
+<seealso>
+</seealso>
+</element>
+
+</module> <!-- StringQueue -->
+
+</package>
+</fpdoc-descriptions>
