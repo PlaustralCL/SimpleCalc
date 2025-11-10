@@ -64,8 +64,9 @@ begin // main program block
 
     if IsCalculation then
     begin
-      ShuntingYard := TShuntingYardParser.Create(TokenList);
-      PostFixExpression := ShuntingYard.ConvertToPostfix;
+      PostFixExpression := TStringQueue.Create;
+      ShuntingYard := TShuntingYardParser.Create(TokenList, PostFixExpression);
+      ShuntingYard.ConvertToPostfix;
       try
         try
           answer := Calculator.Calculate(PostFixExpression);
@@ -77,6 +78,7 @@ begin // main program block
           end;
         end;
       finally
+        FreeAndNil(PostFixExpression);
         FreeAndNil(ShuntingYard);
       end;
     end;

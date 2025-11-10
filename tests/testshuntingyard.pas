@@ -34,7 +34,7 @@ end;
 procedure TTestShuntingYard.Test1;
 var
   InputString: String = '1 * 2 + 3';
-  Actual: TStringQueue;
+  ActualOutput: TStringQueue;
   TokenList: TStringList;
   ShuntingYard: TShuntingYardParser;
   Expected: array[0..4] of string = ('1', '2', '*', '3', '+');
@@ -43,17 +43,18 @@ begin
   TokenList := TStringList.Create;
   TokenList.Delimiter := ' ';
   TokenList.DelimitedText := InputString;
-  ShuntingYard := TShuntingYardParser.Create(TokenList);
-  Actual := ShuntingYard.ConvertToPostfix;
+  ActualOutput := TStringQueue.Create;
+  ShuntingYard := TShuntingYardParser.Create(TokenList, ActualOutput);
+  ShuntingYard.ConvertToPostfix;
 
-  AssertEquals(Length(Expected), Actual.Size);
+  AssertEquals(Length(Expected), ActualOutput.Size);
   for Token in Expected do
   begin
-    AssertEquals(Token, Actual.Dequeue);
+    AssertEquals(Token, ActualOutput.Dequeue);
   end;
-  AssertEquals(0, Actual.Size);
+  AssertEquals(0, ActualOutput.Size);
 
-  FreeAndNil(Actual);
+  FreeAndNil(ActualOutput);
   FreeAndNil(TokenList);
   FreeAndNil(ShuntingYard);
 end;
@@ -70,8 +71,9 @@ begin
   TokenList := TStringList.Create;
   TokenList.Delimiter := ' ';
   TokenList.DelimitedText := InputString;
-  ShuntingYard := TShuntingYardParser.Create(TokenList);
-  Actual := ShuntingYard.ConvertToPostfix;
+  Actual := TStringQueue.Create;
+  ShuntingYard := TShuntingYardParser.Create(TokenList, Actual);
+  ShuntingYard.ConvertToPostfix;
 
   AssertEquals(Length(Expected), Actual.Size);
   for Token in Expected do
@@ -97,8 +99,9 @@ begin
   TokenList := TStringList.Create;
   TokenList.Delimiter := ' ';
   TokenList.DelimitedText := InputString;
-  ShuntingYard := TShuntingYardParser.Create(TokenList);
-  Actual := ShuntingYard.ConvertToPostfix;
+  Actual := TStringQueue.Create;
+  ShuntingYard := TShuntingYardParser.Create(TokenList, Actual);
+  ShuntingYard.ConvertToPostfix;
 
   AssertEquals(Length(Expected), Actual.Size);
   for Token in Expected do
@@ -124,8 +127,9 @@ begin
   TokenList := TStringList.Create;
   TokenList.Delimiter := ' ';
   TokenList.DelimitedText := InputString;
-  ShuntingYard := TShuntingYardParser.Create(TokenList);
-  Actual := ShuntingYard.ConvertToPostfix;
+  Actual := TStringQueue.Create;
+  ShuntingYard := TShuntingYardParser.Create(TokenList, Actual);
+  ShuntingYard.ConvertToPostfix;
 
   AssertEquals(Length(Expected), Actual.Size);
   for Token in Expected do
@@ -151,8 +155,9 @@ begin
   TokenList := TStringList.Create;
   TokenList.Delimiter := ' ';
   TokenList.DelimitedText := InputString;
-  ShuntingYard := TShuntingYardParser.Create(TokenList);
-  Actual := ShuntingYard.ConvertToPostfix;
+  Actual := TStringQueue.Create;
+  ShuntingYard := TShuntingYardParser.Create(TokenList, Actual);
+  ShuntingYard.ConvertToPostfix;
 
   AssertEquals(Length(Expected), Actual.Size);
   for Token in Expected do
@@ -178,8 +183,9 @@ begin
   TokenList := TStringList.Create;
   TokenList.Delimiter := ' ';
   TokenList.DelimitedText := InputString;
-  ShuntingYard := TShuntingYardParser.Create(TokenList);
-  Actual := ShuntingYard.ConvertToPostfix;
+  Actual := TStringQueue.Create;
+  ShuntingYard := TShuntingYardParser.Create(TokenList, Actual);
+  ShuntingYard.ConvertToPostfix;
 
 
   AssertEquals(Length(Expected), Actual.Size);

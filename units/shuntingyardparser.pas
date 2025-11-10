@@ -16,9 +16,9 @@ Type
 
   TShuntingYardParser = class
     public
-      constructor Create(TokenList: TStringList);
+      constructor Create(TokenList: TStringList; OutputQueue: TStringQueue);
       destructor Destroy; override;
-      function ConvertToPostfix: TStringQueue;
+      procedure ConvertToPostfix;
 
     private
       FTokenList: TStringList;
@@ -36,18 +36,20 @@ implementation
 
 { TShuntingYardParser }
 
-constructor TShuntingYardParser.Create(TokenList: TStringList);
+constructor TShuntingYardParser.Create(TokenList: TStringList; OutputQueue: TStringQueue);
 begin
   FOperatorStack := TStringStack.Create;
-  FOutputQueue := TStringQueue.Create;
+  //FOutputQueue := TStringQueue.Create;
+  FOutputQueue := OutputQueue;
   FTokenList := TokenList;
+
 end;
 
 destructor TShuntingYardParser.Destroy;
 begin
-  inherited Destroy;
   FreeAndNil(FOperatorStack);
-  FreeAndNil(FOutputQueue);
+  //FreeAndNil(FOutputQueue);
+  inherited Destroy;
 end;
 
 function TShuntingYardParser.IsOperator(token: string): boolean;
@@ -117,7 +119,7 @@ begin
   end;
 end;
 
-function TShuntingYardParser.ConvertToPostfix: TStringQueue;
+procedure TShuntingYardParser.ConvertToPostfix;
 var
   token: string;
 begin
@@ -164,7 +166,7 @@ begin
     FOutputQueue.Enqueue(FOperatorStack.Pop);
   end;
 
-  ConvertToPostfix := FOutputQueue;
+  //ConvertToPostfix := FOutputQueue;
 end;
 
 end.
