@@ -85,10 +85,19 @@ var
   FirstNode: PNode;
 begin
   if FSize = 0 then raise EIndexError.Create('Empty Queue');
+
   FirstNode := FHead^.Next;
   Result := FirstNode^.Data;
-  FHead^.Next := FirstNode^.Next;
-  Dispose(FirstNode);
+  if FSize = 1 then
+  begin
+    FTail^.Data := '';
+    FTail^.Next := nil;
+  end
+  else
+  begin
+    FHead^.Next := FirstNode^.Next;
+    Dispose(FirstNode);
+  end;
   Dec(FSize);
 end;
 
