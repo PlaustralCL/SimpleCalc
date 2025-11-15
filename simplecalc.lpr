@@ -1,10 +1,17 @@
 program simplecalc;
 
-uses Classes, SysUtils, Tokenizer,
-ShuntingYardParser, Generics.Collections, PostFixCalculator, HelpFile, StringQueue;
+uses
+  Classes,
+  SysUtils,
+  ShuntingYardParser,
+  Generics.Collections,
+  PostFixCalculator,
+  HelpFile,
+  StringQueue,
+  Tokenizer;
 
-//Type
-//  TStringQueue = specialize TQueue<string>;
+  //Type
+  //  TStringQueue = specialize TQueue<string>;
 
 var
   InputString, token: string;
@@ -27,19 +34,19 @@ begin // main program block
   repeat
     HasValidTokens := True;
     IsCalculation := False;
-    write('> ');
+    Write('> ');
     Readln(InputString);
     if Trim(InputString) = '' then continue;
     TokenParser := TTokenizer.Create(InputString);
-    try
-      TokenList := TokenParser.ParseTokens; // Freed as part of TokenParser
-    except
-      on e: Exception do
-      begin
-        writeln('Error. ', e.Message);
-        HasValidTokens := False;
-      end;
+  try
+    TokenList := TokenParser.ParseTokens; // Freed as part of TokenParser
+  except
+    on e: Exception do
+    begin
+      writeln('Error. ', e.Message);
+      HasValidTokens := False;
     end;
+  end;
 
     if HasValidTokens then
     begin
@@ -47,13 +54,13 @@ begin // main program block
       begin
         if token = 'quit' then
         begin
-           IsDone := True;
-           IsCalculation := False;
+          IsDone := True;
+          IsCalculation := False;
         end
         else if token = 'help' then
         begin
-           PrintHelp;
-           IsCalculation := False;
+          PrintHelp;
+          IsCalculation := False;
         end
         else
         begin

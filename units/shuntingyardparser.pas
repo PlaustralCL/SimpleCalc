@@ -8,35 +8,36 @@ interface
 uses
   Classes, SysUtils, Generics.Collections, StringQueue;
 
-Type
+type
   TStringStack = specialize TStack<string>;
 
 
   { TShuntingYardParser }
 
   TShuntingYardParser = class
-    public
-      constructor Create(TokenList: TStringList; OutputQueue: TStringQueue);
-      destructor Destroy; override;
-      procedure ConvertToPostfix;
+  public
+    constructor Create(TokenList: TStringList; OutputQueue: TStringQueue);
+    destructor Destroy; override;
+    procedure ConvertToPostfix;
 
-    private
-      FTokenList: TStringList;
-      FOperatorStack: TStringStack;
-      FOutputQueue: TStringQueue;
-      function IsOperator(token: string): boolean;
-      function IsNumber(token: string): boolean;
-      function IsValidToken(token: string): boolean;
-      function OperatorPrecedence(token: string): integer;
-      procedure ProcessLowPriorityOperator(const token: string);
-      procedure ProcessRightParenthesis;
+  private
+    FTokenList: TStringList;
+    FOperatorStack: TStringStack;
+    FOutputQueue: TStringQueue;
+    function IsOperator(token: string): boolean;
+    function IsNumber(token: string): boolean;
+    function IsValidToken(token: string): boolean;
+    function OperatorPrecedence(token: string): integer;
+    procedure ProcessLowPriorityOperator(const token: string);
+    procedure ProcessRightParenthesis;
   end;
 
 implementation
 
 { TShuntingYardParser }
 
-constructor TShuntingYardParser.Create(TokenList: TStringList; OutputQueue: TStringQueue);
+constructor TShuntingYardParser.Create(TokenList: TStringList;
+  OutputQueue: TStringQueue);
 begin
   FOperatorStack := TStringStack.Create;
   //FOutputQueue := TStringQueue.Create;
@@ -61,7 +62,7 @@ begin
   IsOperator := False;
   for i := low(Operators) to high(operators) do
     if Operators[i] = token then
-       IsOperator := True;
+      IsOperator := True;
 end;
 
 function TShuntingYardParser.IsNumber(token: string): boolean;
@@ -74,13 +75,11 @@ end;
 function TShuntingYardParser.IsValidToken(token: string): boolean;
 begin
   Result := False;
-  if (OperatorPrecedence(token) > 0) or
-     IsNumber(token) or
-     (token = '(') or
-     (token = ')') then
-    begin
-      Result := True;
-    end;
+  if (OperatorPrecedence(token) > 0) or IsNumber(token) or
+    (token = '(') or (token = ')') then
+  begin
+    Result := True;
+  end;
 end;
 
 function TShuntingYardParser.OperatorPrecedence(token: string): integer;
@@ -98,7 +97,7 @@ procedure TShuntingYardParser.ProcessLowPriorityOperator(const token: string);
 begin
   begin
     while (FOperatorStack.Count > 0) and (OperatorPrecedence(token) <=
-      OperatorPrecedence(FOperatorStack.Peek)) do
+        OperatorPrecedence(FOperatorStack.Peek)) do
     begin
       FOutputQueue.Enqueue(FOperatorStack.Pop);
     end;
@@ -138,22 +137,22 @@ begin
       end
       else if token = '(' then
       begin
-        FOperatorStack.Push(token)
+        FOperatorStack.Push(token);
       end
       else if token = ')' then
       begin
         ProcessRightParenthesis;
       end
-      else if (FOperatorStack.Count = 0) or
-              (FOperatorStack.Peek = '(') or
-              (OperatorPrecedence(token) > OperatorPrecedence(FOperatorStack.Peek)) then
+      else if (FOperatorStack.Count = 0) or (FOperatorStack.Peek = '(') or
+        (OperatorPrecedence(token) > OperatorPrecedence(FOperatorStack.Peek)) then
       { If the incoming symbol is an operator and has either higher precedence than
       the operator on the top of the stack, or if the stack is empty, or if the top
       of the stack is "(" (a floor) -- push it on the stack.}
       begin
-        FOperatorStack.Push(token)
+        FOperatorStack.Push(token);
       end
-      else ProcessLowPriorityOperator(token);
+      else
+        ProcessLowPriorityOperator(token);
     end;
   end;
 
@@ -170,4 +169,3 @@ begin
 end;
 
 end.
-

@@ -3,33 +3,36 @@ unit Tokenizer;
 {$mode ObjFPC}{$H+}
 
 interface
+
 uses
   Classes, SysUtils;
 
 type
-  TokenizerState = (NewToken, IntegerToken, DashToken, RealNumToken, AlphaToken, AtToken);
+  TokenizerState = (NewToken, IntegerToken, DashToken, RealNumToken,
+    AlphaToken, AtToken);
 
-  ETokenError = class(Exception) end;
+  ETokenError = class(Exception)
+  end;
 
   { TTokenizer }
 
   TTokenizer = class
-    private
-      FInputString, FToken: string;
-      FTokenList: TStringList;
-      FCurrentState: TokenizerState;
-      procedure ParseNewToken(ch: char);
-      procedure ParseIntegerToken(ch: char);
-      procedure ParseDashToken(ch: char);
-      procedure ParseRealNumToken(ch: char);
-      procedure ParseAlphaToken(ch: char);
-      procedure ParseError;
-      procedure ProcessWhitespace;
-      procedure ParseAtToken(ch: char);
-    public
-      constructor Create(InputString: string);
-      destructor Destroy; override;
-      function ParseTokens: TStringList;
+  private
+    FInputString, FToken: string;
+    FTokenList: TStringList;
+    FCurrentState: TokenizerState;
+    procedure ParseNewToken(ch: char);
+    procedure ParseIntegerToken(ch: char);
+    procedure ParseDashToken(ch: char);
+    procedure ParseRealNumToken(ch: char);
+    procedure ParseAlphaToken(ch: char);
+    procedure ParseError;
+    procedure ProcessWhitespace;
+    procedure ParseAtToken(ch: char);
+  public
+    constructor Create(InputString: string);
+    destructor Destroy; override;
+    function ParseTokens: TStringList;
   end;
 
 
@@ -105,37 +108,37 @@ procedure TTokenizer.ParseNewToken(ch: char);
 begin
   case ch of
     '0'..'9':
-      begin
-        FToken := FToken + ch;
-        FCurrentState := IntegerToken;
-      end;
+    begin
+      FToken := FToken + ch;
+      FCurrentState := IntegerToken;
+    end;
     ' ': FToken := '';
     '.':
-      begin
-        FToken := FToken + ch;
-        FCurrentState := RealNumToken;
-      end;
+    begin
+      FToken := FToken + ch;
+      FCurrentState := RealNumToken;
+    end;
     '-':
-      begin
-        FToken := FToken + ch;
-        FCurrentState := DashToken;
-      end;
+    begin
+      FToken := FToken + ch;
+      FCurrentState := DashToken;
+    end;
     'A'..'Z', 'a'..'z':
-      begin
-        FCurrentState := AlphaToken;
-        ParseAlphaToken(ch);
-      end;
+    begin
+      FCurrentState := AlphaToken;
+      ParseAlphaToken(ch);
+    end;
     '@':
-      begin
-        FTokenList.Add(ch);
-        FToken := '';
-        FCurrentState := AtToken;
-      end
+    begin
+      FTokenList.Add(ch);
+      FToken := '';
+      FCurrentState := AtToken;
+    end
     else
-      begin
-        FTokenList.Add(ch);
-        FToken := '';
-      end;
+    begin
+      FTokenList.Add(ch);
+      FToken := '';
+    end;
   end;
 end;
 
@@ -145,30 +148,30 @@ begin
     '0'..'9': FToken := FToken + ch;
     ' ': ProcessWhitespace;
     '.':
-      begin
-        FToken := FToken + ch;
-        FCurrentState := RealNumToken;
-      end;
+    begin
+      FToken := FToken + ch;
+      FCurrentState := RealNumToken;
+    end;
     'A'..'Z', 'a'..'z':
-      begin
-        FTokenList.Add(FToken);
-        FToken := '';
-        FCurrentState := AlphaToken;
-        ParseAlphaToken(ch);
-      end;
+    begin
+      FTokenList.Add(FToken);
+      FToken := '';
+      FCurrentState := AlphaToken;
+      ParseAlphaToken(ch);
+    end;
     '@':
-      begin
-        FTokenList.Add(ch);
-        FToken := '';
-        FCurrentState := AtToken;
-      end
+    begin
+      FTokenList.Add(ch);
+      FToken := '';
+      FCurrentState := AtToken;
+    end
     else
-      begin
-        FTokenList.Add(FToken);
-        FTokenList.Add(ch);
-        FToken := '';
-        FCurrentState := NewToken;
-      end;
+    begin
+      FTokenList.Add(FToken);
+      FTokenList.Add(ch);
+      FToken := '';
+      FCurrentState := NewToken;
+    end;
   end;
 end;
 
@@ -179,29 +182,29 @@ begin
     '0'..'9': FToken := FToken + ch;
     ' ': ProcessWhitespace;
     'A'..'Z', 'a'..'z':
-      begin
-        FTokenList.Add(FToken);
-        FToken := '';
-        FCurrentState := AlphaToken;
-        ParseAlphaToken(ch);
-      end;
+    begin
+      FTokenList.Add(FToken);
+      FToken := '';
+      FCurrentState := AlphaToken;
+      ParseAlphaToken(ch);
+    end;
     '@':
-      begin
-        FTokenList.Add(ch);
-        FToken := '';
-        FCurrentState := AtToken;
-      end;
+    begin
+      FTokenList.Add(ch);
+      FToken := '';
+      FCurrentState := AtToken;
+    end;
     '.':
-      begin
-        raise ETokenError.Create('Too many decimal points');
-      end
+    begin
+      raise ETokenError.Create('Too many decimal points');
+    end
     else
-      begin
-        FTokenList.Add(FToken);
-        FTokenList.Add(ch);
-        FToken := '';
-        FCurrentState := NewToken;
-      end;
+    begin
+      FTokenList.Add(FToken);
+      FTokenList.Add(ch);
+      FToken := '';
+      FCurrentState := NewToken;
+    end;
   end;
 end;
 
@@ -209,42 +212,42 @@ procedure TTokenizer.ParseDashToken(ch: char);
 begin
   case ch of
     '0'..'9':
-      begin
-        FToken := FToken + ch;
-        FCurrentState := IntegerToken;
-      end;
+    begin
+      FToken := FToken + ch;
+      FCurrentState := IntegerToken;
+    end;
     ' ': ProcessWhitespace;
     '.':
-      begin
-        FToken := FToken + ch;
-        FCurrentState := RealNumToken;
-      end;
+    begin
+      FToken := FToken + ch;
+      FCurrentState := RealNumToken;
+    end;
     '-':
-      begin
-        FTokenList.Add(FToken);
-        FToken := ch;
-        FCurrentState := IntegerToken;
-      end;
+    begin
+      FTokenList.Add(FToken);
+      FToken := ch;
+      FCurrentState := IntegerToken;
+    end;
     'A'..'Z', 'a'..'z':
-      begin
-        FTokenList.Add(FToken);
-        FToken := '';
-        FCurrentState := AlphaToken;
-        ParseAlphaToken(ch);
-      end;
+    begin
+      FTokenList.Add(FToken);
+      FToken := '';
+      FCurrentState := AlphaToken;
+      ParseAlphaToken(ch);
+    end;
     '@':
-      begin
-        FTokenList.Add(ch);
-        FToken := '';
-        FCurrentState := AtToken;
-      end
+    begin
+      FTokenList.Add(ch);
+      FToken := '';
+      FCurrentState := AtToken;
+    end
     else
-      begin
-        FTokenList.Add(FToken);
-        FTokenList.Add(ch);
-        FToken := '';
-        FCurrentState := NewToken;
-      end;
+    begin
+      FTokenList.Add(FToken);
+      FTokenList.Add(ch);
+      FToken := '';
+      FCurrentState := NewToken;
+    end;
   end;
 end;
 
@@ -252,27 +255,27 @@ procedure TTokenizer.ParseAlphaToken(ch: char);
 begin
   case ch of
     'A'..'Z':
-      begin
-        ch := chr(ord(ch) + 32); // convert to lowercase
-        FToken := FToken + ch;
-      end;
-      'a'..'z':
-      begin
-        FToken := FToken + ch;
-      end;
-      '@':
-      begin
-        FTokenList.Add(ch);
-        FToken := '';
-        FCurrentState := AtToken;
-      end
+    begin
+      ch := chr(Ord(ch) + 32); // convert to lowercase
+      FToken := FToken + ch;
+    end;
+    'a'..'z':
+    begin
+      FToken := FToken + ch;
+    end;
+    '@':
+    begin
+      FTokenList.Add(ch);
+      FToken := '';
+      FCurrentState := AtToken;
+    end
     else
-      begin
-        FTokenList.Add(FToken);
-        FToken := '';
-        FCurrentState := NewToken;
-        ParseNewToken(ch);
-      end;
+    begin
+      FTokenList.Add(FToken);
+      FToken := '';
+      FCurrentState := NewToken;
+      ParseNewToken(ch);
+    end;
   end;
 
 end;
@@ -280,9 +283,4 @@ end;
 
 
 
-
-
-
-
 end.
-

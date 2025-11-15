@@ -3,50 +3,54 @@ unit PostFixCalculator;
 {$mode ObjFPC}{$H+}
 
 interface
+
 uses
   Classes, SysUtils, Math, StringQueue;
 
 type
 
-  EUnknownOperatorError = class(Exception) end;
-  EDivideByZeroError = class(Exception) end;
+  EUnknownOperatorError = class(Exception)
+  end;
+
+  EDivideByZeroError = class(Exception)
+  end;
 
   { TFloatStack }
 
   TFloatStack = class
-    public
-      constructor Create;
-      function Size: integer;
-      function Pop: double;
-      procedure Push(token: double);
-      function Peek: double;
-      function IsEmpty: boolean;
+  public
+    constructor Create;
+    function Size: integer;
+    function Pop: double;
+    procedure Push(token: double);
+    function Peek: double;
+    function IsEmpty: boolean;
 
-    private
-      FCount: integer;
-      FLength: integer;
-      FStackArray: array of double;
-      procedure GrowArray;
+  private
+    FCount: integer;
+    FLength: integer;
+    FStackArray: array of double;
+    procedure GrowArray;
   end;
 
   { TPostFixCalculator }
 
   TPostFixCalculator = class
-    public
-      constructor Create;
-      destructor Destroy; override;
-      function Calculate(PostFixExpression: TStringQueue): double;
+  public
+    constructor Create;
+    destructor Destroy; override;
+    function Calculate(PostFixExpression: TStringQueue): double;
 
-    private
-      FOperandStack: TFloatStack;
-      FAns: double;
-      procedure Add;
-      procedure Subtract;
-      procedure Divide;
-      procedure Multiply;
-      procedure Power;
-      procedure IntegerDivision;
-      procedure Modulo;
+  private
+    FOperandStack: TFloatStack;
+    FAns: double;
+    procedure Add;
+    procedure Subtract;
+    procedure Divide;
+    procedure Multiply;
+    procedure Power;
+    procedure IntegerDivision;
+    procedure Modulo;
   end;
 
 implementation
@@ -127,15 +131,15 @@ begin
     else
     begin
       case token of
-      '+': Add;
-      '-': Subtract;
-      '*': Multiply;
-      '/': Divide;
-      '^': Power;
-      '\': IntegerDivision;
-      '%': Modulo;
-      else
-        raise EUnknownOperatorError.Create('Unknown operator: ' + token);
+        '+': Add;
+        '-': Subtract;
+        '*': Multiply;
+        '/': Divide;
+        '^': Power;
+        '\': IntegerDivision;
+        '%': Modulo;
+        else
+          raise EUnknownOperatorError.Create('Unknown operator: ' + token);
       end;
     end;
   end;
@@ -189,7 +193,7 @@ var
 begin
   right := FOperandStack.Pop;
   left := FOperandStack.Pop;
-  FOperandStack.Push(left**right);
+  FOperandStack.Push(left ** right);
 end;
 
 procedure TPostFixCalculator.IntegerDivision;
@@ -217,8 +221,7 @@ begin
   begin
     raise EDivideByZeroError.Create('Divide by Zero');
   end;
-  FOperandStack.Push(left Mod right);
+  FOperandStack.Push(left mod right);
 end;
 
 end.
-
