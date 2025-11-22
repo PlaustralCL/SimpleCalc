@@ -1,18 +1,245 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<fpdoc-descriptions><package name="calc"><module name="ShuntingYardParser"><element name="TShuntingYardParser.ProcessRightParenthesis"><short>Process right parenthesis during shunting yard algorithm.</short><descr>If the incoming symbol is a right parenthesis: discard the right parenthesis, pop stack symbols and add them to the output queue until there is a left parenthesis in the operator stack. Pop the left parenthesis and discard it.
-</descr>
-      </element><element name="TShuntingYardParser.ProcessLowPriorityOperator"><short>Process operators the lower precedence than the operator on top of the stack.</short><descr>If the incoming symbol is an operator and has either lower precedence than the operator on the top of the stack, or has the same precedence as the operator on the top of the stack and is left associative -- continue to pop the stack until this is not true. Then, push the incoming operator.
-</descr>
-      </element><element name="TShuntingYardParser.IsNumber"><short>Determine if a string is a number</short><descr>Determines if a string is a number by trying to convert it to a float.
-<b>Return:</b> True if the string can be converted to a number (float), false otherwise.
-</descr>
-      </element>
-    <element name="TShuntingYardParser.ConvertToPostfix"><short>Convert TSTringQueue to a queue in postfix notation</short><descr>Uses the Shunting Yard algorithm to convert the string of tokens to a queue that represents the corresponding postfix notation.
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<fpdoc-descriptions>
+<package name="simplecalc">
 
-<p>Based on the decription of the shunting yard algorithm at <link id="https://mathcenter.oxford.emory.edu/site/cs171/shuntingYardAlgorithm/"/>
-          </p>
-        </descr>
-      </element>
-    </module>
-  </package>
+<!--
+  ====================================================================
+    ShuntingYardParser
+  ====================================================================
+-->
+
+<module name="ShuntingYardParser">
+<short></short>
+<descr>
+</descr>
+
+<!-- uses unit Visibility: default -->
+<element name="Classes">
+<short></short>
+</element>
+
+<!-- uses unit Visibility: default -->
+<element name="SysUtils">
+<short></short>
+</element>
+
+<!-- uses unit Visibility: default -->
+<element name="Generics.Collections">
+<short></short>
+</element>
+
+<!-- uses unit Visibility: default -->
+<element name="StringQueue">
+<short></short>
+</element>
+
+<!-- specialized class type Visibility: default -->
+<element name="TStringStack">
+<short></short>
+<descr>
+</descr>
+<seealso>
+</seealso>
+</element>
+
+<!-- class Visibility: default -->
+<element name="TShuntingYardParser">
+<short>Convert a list of tokens into a queue for postfix calculations</short>
+<descr>
+Take a list of of string tokens and process the tokens into a queue that can
+be used for postfix calculations. The processing is based on the Shunting Yard
+Algorithm, as described at <url href="https://mathcenter.oxford.emory.edu/site/cs171/shuntingYardAlgorithm/"/>.
+</descr>
+<errors>
+</errors>
+<seealso>
+</seealso>
+</element>
+
+<!-- constructor Visibility: public -->
+<element name="TShuntingYardParser.Create">
+<short>Create a ShuntingYardParser object.</short>
+<descr>
+</descr>
+<errors>
+</errors>
+<seealso>
+</seealso>
+</element>
+
+<!-- argument Visibility: default -->
+<element name="TShuntingYardParser.Create.TokenList">
+<short>The list of tokens to process. The ShuntingYardParser does not manage
+the memory for the token list.</short>
+</element>
+
+<!-- argument Visibility: default -->
+<element name="TShuntingYardParser.Create.OutputQueue">
+<short>The empty queue of strings where the postfix information will be stored.
+The caller is responsible for freeing the Queue.</short>
+</element>
+
+<!-- destructor Visibility: public -->
+<element name="TShuntingYardParser.Destroy">
+<short></short>
+<descr>
+</descr>
+<errors>
+</errors>
+<seealso>
+</seealso>
+</element>
+
+<!-- procedure Visibility: public -->
+<element name="TShuntingYardParser.ConvertToPostfix">
+<short></short>
+<descr>
+</descr>
+<errors>
+</errors>
+<seealso>
+</seealso>
+</element>
+
+<!-- variable Visibility: private -->
+<element name="TShuntingYardParser.FTokenList">
+<short></short>
+<descr>
+</descr>
+<seealso>
+</seealso>
+</element>
+
+<!-- variable Visibility: private -->
+<element name="TShuntingYardParser.FOperatorStack">
+<short></short>
+<descr>
+</descr>
+<seealso>
+</seealso>
+</element>
+
+<!-- variable Visibility: private -->
+<element name="TShuntingYardParser.FOutputQueue">
+<short></short>
+<descr>
+</descr>
+<seealso>
+</seealso>
+</element>
+
+<!-- function Visibility: private -->
+<element name="TShuntingYardParser.IsOperator">
+<short></short>
+<descr>
+</descr>
+<errors>
+</errors>
+<seealso>
+</seealso>
+</element>
+
+<!-- function result Visibility: default -->
+<element name="TShuntingYardParser.IsOperator.Result">
+<short></short>
+</element>
+
+<!-- argument Visibility: default -->
+<element name="TShuntingYardParser.IsOperator.token">
+<short></short>
+</element>
+
+<!-- function Visibility: private -->
+<element name="TShuntingYardParser.IsNumber">
+<short></short>
+<descr>
+</descr>
+<errors>
+</errors>
+<seealso>
+</seealso>
+</element>
+
+<!-- function result Visibility: default -->
+<element name="TShuntingYardParser.IsNumber.Result">
+<short></short>
+</element>
+
+<!-- argument Visibility: default -->
+<element name="TShuntingYardParser.IsNumber.token">
+<short></short>
+</element>
+
+<!-- function Visibility: private -->
+<element name="TShuntingYardParser.IsValidToken">
+<short></short>
+<descr>
+</descr>
+<errors>
+</errors>
+<seealso>
+</seealso>
+</element>
+
+<!-- function result Visibility: default -->
+<element name="TShuntingYardParser.IsValidToken.Result">
+<short></short>
+</element>
+
+<!-- argument Visibility: default -->
+<element name="TShuntingYardParser.IsValidToken.token">
+<short></short>
+</element>
+
+<!-- function Visibility: private -->
+<element name="TShuntingYardParser.OperatorPrecedence">
+<short></short>
+<descr>
+</descr>
+<errors>
+</errors>
+<seealso>
+</seealso>
+</element>
+
+<!-- function result Visibility: default -->
+<element name="TShuntingYardParser.OperatorPrecedence.Result">
+<short></short>
+</element>
+
+<!-- argument Visibility: default -->
+<element name="TShuntingYardParser.OperatorPrecedence.token">
+<short></short>
+</element>
+
+<!-- procedure Visibility: private -->
+<element name="TShuntingYardParser.ProcessLowPriorityOperator">
+<short></short>
+<descr>
+</descr>
+<errors>
+</errors>
+<seealso>
+</seealso>
+</element>
+
+<!-- argument Visibility: default -->
+<element name="TShuntingYardParser.ProcessLowPriorityOperator.token">
+<short></short>
+</element>
+
+<!-- procedure Visibility: private -->
+<element name="TShuntingYardParser.ProcessRightParenthesis">
+<short></short>
+<descr>
+</descr>
+<errors>
+</errors>
+<seealso>
+</seealso>
+</element>
+
+</module> <!-- ShuntingYardParser -->
+
+</package>
 </fpdoc-descriptions>
