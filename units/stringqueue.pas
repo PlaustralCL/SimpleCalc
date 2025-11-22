@@ -59,7 +59,7 @@ begin
     Dequeue;
   end;
   Dispose(FHead);
-  // FTail is disposed during Dequeue
+  Dispose(FTail);
   inherited Destroy;
 end;
 
