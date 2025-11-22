@@ -13,6 +13,10 @@
       <Title Value="simplecalc"/>
       <UseAppBundle Value="False"/>
       <ResourceType Value="res"/>
+      <Icon Value="0"/>
+      <Resources Count="1">
+        <Resource_0 FileName="helptext.txt" Type="RCDATA" ResourceName="HELPTEXT"/>
+      </Resources>
     </General>
     <LazDoc Paths="docs"/>
     <BuildModes>
@@ -121,6 +125,10 @@
         <Filename Value="units\tokenizer.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="Tokenizer"/>
+      </Unit>
+      <Unit>
+        <Filename Value="helptext.txt"/>
+        <IsPartOfProject Value="True"/>
       </Unit>
     </Units>
   </ProjectOptions>

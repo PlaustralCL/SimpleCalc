@@ -23,6 +23,8 @@ var
   Calculator: TPostFixCalculator;
   answer: double;
 
+{$R *.res}
+
 begin // main program block
   IsDone := False;
 
