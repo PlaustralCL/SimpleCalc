@@ -54,7 +54,7 @@ begin
     ResStream := TResourceStream.Create(HInstance, 'HELPTEXT', RT_RCDATA);
     SetLength(TextContent, ResStream.Size);
     ResStream.Read(TextContent[1], ResStream.Size);
-    Writeln(TextContent);
+    Write(TextContent);
   finally
     ResStream.Free;
   end;
