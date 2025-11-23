@@ -23,7 +23,7 @@ var
   Calculator: TPostFixCalculator;
   answer: double;
 
-{$R *.res}
+  {$R *.res}
 
 begin // main program block
   IsDone := False;
@@ -36,20 +36,22 @@ begin // main program block
   repeat
     HasValidTokens := True;
     IsCalculation := False;
+    // Get input and convert it to tokens
     Write('> ');
     Readln(InputString);
     if Trim(InputString) = '' then continue;
     TokenParser := TTokenizer.Create(InputString);
-  try
-    TokenList := TokenParser.ParseTokens; // Freed as part of TokenParser
-  except
-    on e: Exception do
-    begin
-      writeln('Error. ', e.Message);
-      HasValidTokens := False;
+    try
+      TokenList := TokenParser.ParseTokens; // Freed as part of TokenParser
+    except
+      on e: Exception do
+      begin
+        writeln('Error. ', e.Message);
+        HasValidTokens := False;
+      end;
     end;
-  end;
 
+    // Seach for special commands
     if HasValidTokens then
     begin
       for token in TokenList do
@@ -57,12 +59,10 @@ begin // main program block
         if token = 'quit' then
         begin
           IsDone := True;
-          IsCalculation := False;
         end
         else if token = 'help' then
         begin
           PrintHelp;
-          IsCalculation := False;
         end
         else
         begin
@@ -71,12 +71,14 @@ begin // main program block
       end;
     end;
 
+    // Perform calculations
     if IsCalculation then
     begin
       PostFixExpression := TStringQueue.Create;
       ShuntingYard := TShuntingYardParser.Create(TokenList, PostFixExpression);
       ShuntingYard.ConvertToPostfix;
       try
+        // write answer
         try
           answer := Calculator.Calculate(PostFixExpression);
           writeln(FloatToStr(answer));
