@@ -40,7 +40,6 @@ constructor TShuntingYardParser.Create(TokenList: TStringList;
   OutputQueue: TStringQueue);
 begin
   FOperatorStack := TStringStack.Create;
-  //FOutputQueue := TStringQueue.Create;
   FOutputQueue := OutputQueue;
   FTokenList := TokenList;
 
@@ -49,7 +48,6 @@ end;
 destructor TShuntingYardParser.Destroy;
 begin
   FreeAndNil(FOperatorStack);
-  //FreeAndNil(FOutputQueue);
   inherited Destroy;
 end;
 
