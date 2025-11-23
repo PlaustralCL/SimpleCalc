@@ -123,7 +123,7 @@ initialized to zero.
 <element name="TStringQueue.Destroy">
 <short>Destroy the TStringQueue instance</short>
 <descr>
-If the queue is not empty, dequeue all elments and dispose of the head pointer.
+If the queue is not empty, dequeue all elments and dispose of the head  and tail pointers.
 </descr>
 <errors>
 </errors>
@@ -135,7 +135,11 @@ If the queue is not empty, dequeue all elments and dispose of the head pointer.
 <element name="TStringQueue.Enqueue">
 <short>Add a new element to the queue</short>
 <descr>
-Add a new element to the queue and increment the number queue elements.
+<p>Add a new element to the queue and increment the number queue elements.</p>
+<p>Parameters:</p>
+<ul>
+<li>token - The string that will be added to the queue.</li>
+</ul>
 </descr>
 <errors>
 </errors>
@@ -152,7 +156,7 @@ Add a new element to the queue and increment the number queue elements.
 <element name="TStringQueue.Dequeue">
 <short>Remove the next element in the queue and return its data.</short>
 <descr>
-Remove the next element in the queue and returns its data. D1ecrements the number
+Remove the next element in the queue and returns its data. Decrements the number
 of elements in the queue.
 </descr>
 <errors>

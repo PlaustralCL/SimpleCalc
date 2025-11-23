@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <fpdoc-descriptions>
-<package name="simplecalc">
+<package>
 
 <!--
   ====================================================================
@@ -60,6 +60,14 @@ Algorithm, as described at <url href="https://mathcenter.oxford.emory.edu/site/c
 <element name="TShuntingYardParser.Create">
 <short>Create a ShuntingYardParser object.</short>
 <descr>
+<p>Parameters:</p>
+<ul>
+<li>TokenList - The list of tokens to process. The ShuntingYardParser does not manage
+the memory for the token list</li>
+<li>OutputQueue - The empty queue of strings where the postfix information will be stored.
+The caller is responsible for freeing the Queue.</li>
+</ul>
+
 </descr>
 <errors>
 </errors>
@@ -94,6 +102,8 @@ The caller is responsible for freeing the Queue.</short>
 <element name="TShuntingYardParser.ConvertToPostfix">
 <short></short>
 <descr>
+Converts the provided list of strings into a queue for postfix calculations.
+The list of strings and the output queue are provided when the instance is created.
 </descr>
 <errors>
 </errors>
@@ -130,8 +140,10 @@ The caller is responsible for freeing the Queue.</short>
 
 <!-- function Visibility: private -->
 <element name="TShuntingYardParser.IsOperator">
-<short></short>
+<short>Determines if the provided token is an operator.</short>
 <descr>
+<p>Determines if the provided token is an operator.</p>
+<b>Return</b> - Returns True if the token is an operator, False otherwise.
 </descr>
 <errors>
 </errors>
