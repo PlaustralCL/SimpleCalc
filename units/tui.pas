@@ -22,6 +22,7 @@ type
     FInputString: string;
     FIsDone: boolean;
     FTokenList: TStringList;
+    FCalculator: TPostFixCalculator;
     procedure PrintHeader;
     procedure GetInput;
     procedure PerformCalculation;
@@ -67,7 +68,6 @@ begin
       PrintHelp;
       isValidInput := False;
     end;
-
   until IsValidInput;
 
   if LowerCase(InputString) = 'quit' then
@@ -89,6 +89,7 @@ var
   TokenParser: TTokenizer;
 begin
   Result := True;
+  FTokenList.Clear;
   try
     TokenParser := TTokenizer.Create(FInputString, FTokenList);
     try
@@ -110,28 +111,22 @@ var
   PostFixExpression: TSTringQueue;
   ShuntingYard: TShuntingYardParser;
   Answer: double;
-  Calculator: TPostFixCalculator;
 begin
-  Calculator := TPostFixCalculator.Create;
   PostFixExpression := TStringQueue.Create;
   ShuntingYard := TShuntingYardParser.Create(FTokenList, PostFixExpression);
   ShuntingYard.ConvertToPostfix;
   try
     try
-      answer := Calculator.Calculate(PostFixExpression);
+      Answer := FCalculator.Calculate(PostFixExpression);
       Result := FloatToStr(answer);
     except
       on e: Exception do
-      begin
         Result := 'Error. ' + e.Message;
-      end;
     end;
   finally
-    FreeAndNil(Calculator);
     FreeAndNil(PostFixExpression);
     FreeAndNil(ShuntingYard);
   end;
-
 end;
 
 procedure TTui.Run;
@@ -159,12 +154,14 @@ begin
   FInputString := '';
   FIsDone := False;
   FTokenList := TStringList.Create;
+  FCalculator := TPostFixCalculator.Create;
   inherited Create;
 end;
 
 destructor TTui.Destroy;
 begin
   inherited Destroy;
+  FreeAndNil(FCalculator);
   FreeAndNil(FTokenList);
 end;
 
