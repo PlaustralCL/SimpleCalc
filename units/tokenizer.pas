@@ -16,6 +16,8 @@ type
 
   { TTokenizer }
 
+  // TODO: Convert states to separate classes instead of procedures within
+  // TTokenizer.
   TTokenizer = class
   private
     FInputString, FToken: string;
@@ -30,31 +32,30 @@ type
     procedure ProcessWhitespace;
     procedure ParseAtToken(ch: char);
   public
-    constructor Create(InputString: string);
+    constructor Create(InputString: string; TokenList: TStringList);
     destructor Destroy; override;
-    function ParseTokens: TStringList;
+    procedure ParseTokens;
   end;
-
-
 
 
 implementation
 
-constructor TTokenizer.Create(InputString: string);
+constructor TTokenizer.Create(InputString: string; TokenList: TStringList);
 begin
   FInputString := InputString;
-  FTokenList := TStringList.Create;
+  FTokenList := TokenList;
   FToken := '';
   FCurrentState := NewToken;
+
 end;
 
 destructor TTokenizer.Destroy;
 begin
-  FreeAndNil(FTokenList);
-  inherited Destroy;
+  //FreeAndNil(FTokenList);
+  //inherited Destroy;
 end;
 
-function TTokenizer.ParseTokens: TStringList;
+procedure TTokenizer.ParseTokens;
 var
   ch: char;
 begin
@@ -72,9 +73,7 @@ begin
     end;
   end;
   FTokenList.Add(FToken);
-  ParseTokens := FTokenList;
 end;
-
 
 
 procedure TTokenizer.ParseError;

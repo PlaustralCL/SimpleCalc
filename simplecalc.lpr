@@ -8,7 +8,7 @@ uses
   PostFixCalculator,
   HelpFile,
   StringQueue,
-  Tokenizer;
+  Tokenizer, Tui;
 
   //Type
   //  TStringQueue = specialize TQueue<string>;
@@ -40,9 +40,10 @@ begin // main program block
     Write('> ');
     Readln(InputString);
     if Trim(InputString) = '' then continue;
-    TokenParser := TTokenizer.Create(InputString);
+    TokenList := TStringList.Create;
+    TokenParser := TTokenizer.Create(InputString, TokenList);
     try
-      TokenList := TokenParser.ParseTokens; // Freed as part of TokenParser
+      TokenParser.ParseTokens;
     except
       on e: Exception do
       begin
@@ -94,6 +95,7 @@ begin // main program block
       end;
     end;
     FreeAndNil(TokenParser);
+    FreeAndNil(TokenList);
 
   until IsDone;
 
