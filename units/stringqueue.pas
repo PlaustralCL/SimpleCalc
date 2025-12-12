@@ -5,7 +5,8 @@ unit StringQueue;
 interface
 
 uses
-  Classes, SysUtils;
+  Classes,
+  SysUtils;
 
 type
   PNode = ^TNode;
@@ -84,7 +85,8 @@ function TStringQueue.Dequeue: string;
 var
   FirstNode: PNode;
 begin
-  if FSize = 0 then raise EIndexError.Create('Empty Queue');
+  if FSize = 0 then
+    raise EIndexError.Create('Empty Queue');
 
   FirstNode := FHead^.Next;
   Result := FirstNode^.Data;
@@ -105,7 +107,8 @@ function TStringQueue.Peek: string;
 var
   FirstNode: PNode;
 begin
-  if FSize = 0 then raise EIndexError.Create('Empty Queue');
+  if FSize = 0 then
+    raise EIndexError.Create('Empty Queue');
   FirstNode := FHead^.Next;
   Result := FirstNode^.Data;
 end;

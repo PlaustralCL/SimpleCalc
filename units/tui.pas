@@ -25,10 +25,8 @@ type
     FCalculator: TPostFixCalculator;
     procedure PrintHeader;
     procedure GetInput;
-    procedure PerformCalculation;
-    procedure PrintResults;
     function ConvertToTokens: boolean;
-    function CalculateResult: string;
+    function PerformCalculation: string;
   public
     constructor Create;
     destructor Destroy; override;
@@ -38,9 +36,6 @@ type
 implementation
 
 { TTui }
-
-
-
 
 procedure TTui.PrintHeader;
 begin
@@ -74,16 +69,6 @@ begin
     FIsDone := True;
 end;
 
-procedure TTui.PerformCalculation;
-begin
-
-end;
-
-procedure TTui.PrintResults;
-begin
-
-end;
-
 function TTui.ConvertToTokens: boolean;
 var
   TokenParser: TTokenizer;
@@ -106,7 +91,7 @@ begin
   end;
 end;
 
-function TTui.CalculateResult: string;
+function TTui.PerformCalculation: string;
 var
   PostFixExpression: TSTringQueue;
   ShuntingYard: TShuntingYardParser;
@@ -142,7 +127,7 @@ begin
       IsValidTokens := ConvertToTokens;
       if IsValidTokens then
       begin
-        Answer := CalculateResult;
+        Answer := PerformCalculation;
         writeln(Answer);
       end;
     end;

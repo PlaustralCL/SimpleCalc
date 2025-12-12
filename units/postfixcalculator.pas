@@ -5,7 +5,10 @@ unit PostFixCalculator;
 interface
 
 uses
-  Classes, SysUtils, Math, StringQueue;
+  Classes,
+  SysUtils,
+  Math,
+  StringQueue;
 
 type
 
@@ -77,7 +80,8 @@ end;
 
 procedure TFloatStack.Push(token: double);
 begin
-  if FCount = FLength then GrowArray;
+  if FCount = FLength then
+    GrowArray;
   FStackArray[FCount] := token;
   Inc(FCount);
 end;
@@ -124,7 +128,8 @@ begin
     begin
       FOperandStack.Push(NumberToken);
     end
-    else if token = '@' then
+    else
+    if token = '@' then
     begin
       FOperandStack.Push(FAns);
     end

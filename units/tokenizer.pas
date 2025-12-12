@@ -5,7 +5,8 @@ unit Tokenizer;
 interface
 
 uses
-  Classes, SysUtils;
+  Classes,
+  SysUtils;
 
 type
   TokenizerState = (NewToken, IntegerToken, DashToken, RealNumToken,
@@ -93,7 +94,8 @@ end;
 
 procedure TTokenizer.ParseAtToken(ch: char);
 begin
-  if ch = ' ' then ProcessWhitespace
+  if ch = ' ' then
+    ProcessWhitespace
   else
   begin
     FTokenList.Add(FToken);

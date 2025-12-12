@@ -6,7 +6,10 @@ interface
 
 
 uses
-  Classes, SysUtils, Generics.Collections, StringQueue;
+  Classes,
+  SysUtils,
+  Generics.Collections,
+  StringQueue;
 
 type
   TStringStack = specialize TStack<string>;
@@ -73,8 +76,8 @@ end;
 function TShuntingYardParser.IsValidToken(token: string): boolean;
 begin
   Result := False;
-  if (OperatorPrecedence(token) > 0) or IsNumber(token) or
-    (token = '(') or (token = ')') then
+  if (OperatorPrecedence(token) > 0) or IsNumber(token) or (token = '(') or
+    (token = ')') then
   begin
     Result := True;
   end;
@@ -133,15 +136,18 @@ begin
       begin
         FOutputQueue.Enqueue(token);
       end
-      else if token = '(' then
+      else
+      if token = '(' then
       begin
         FOperatorStack.Push(token);
       end
-      else if token = ')' then
+      else
+      if token = ')' then
       begin
         ProcessRightParenthesis;
       end
-      else if (FOperatorStack.Count = 0) or (FOperatorStack.Peek = '(') or
+      else
+      if (FOperatorStack.Count = 0) or (FOperatorStack.Peek = '(') or
         (OperatorPrecedence(token) > OperatorPrecedence(FOperatorStack.Peek)) then
       { If the incoming symbol is an operator and has either higher precedence than
       the operator on the top of the stack, or if the stack is empty, or if the top

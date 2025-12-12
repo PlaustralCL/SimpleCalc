@@ -130,6 +130,11 @@
         <Filename Value="helptext.txt"/>
         <IsPartOfProject Value="True"/>
       </Unit>
+      <Unit>
+        <Filename Value="units\tui.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="Tui"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
