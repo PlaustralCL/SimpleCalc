@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<fpdoc-descriptions>
+<package name="simplecalc">
+
+<!--
+  ====================================================================
+    Tokenizer
+  ====================================================================
+-->
+
+<module name="Tokenizer">
+<short>Convert string into a list of tokens</short>
+<descr>
+<p>Converts the input from the user, in the form  of a string into a list 
+of tokens. Each token will be a string. Minimal error checking is performed. However,
+a few obvious cases that are impossible are caught, such as two decimal places
+in a number.</p>
+</descr>
+
+<!-- uses unit Visibility: default -->
+<element name="Classes">
+<short></short>
+</element>
+
+<!-- uses unit Visibility: default -->
+<element name="SysUtils">
+<short></short>
+</element>
+
+<!-- enumeration type Visibility: default -->
+<element name="TokenizerState">
+<short></short>
+<descr>
+<p>Enum that contains all possible states used by the finite state machine
+to split the input string into tokens. Only used internally and should not be used
+by other units.</p>
+</descr>
+<seealso>
+</seealso>
+</element>
+
+<!-- enumeration value Visibility: default -->
+<element name="TokenizerState.NewToken">
+<short></short>
+</element>
+
+<!-- enumeration value Visibility: default -->
+<element name="TokenizerState.IntegerToken">
+<short></short>
+</element>
+
+<!-- enumeration value Visibility: default -->
+<element name="TokenizerState.DashToken">
+<short></short>
+</element>
+
+<!-- enumeration value Visibility: default -->
+<element name="TokenizerState.RealNumToken">
+<short></short>
+</element>
+
+<!-- enumeration value Visibility: default -->
+<element name="TokenizerState.AlphaToken">
+<short></short>
+</element>
+
+<!-- enumeration value Visibility: default -->
+<element name="TokenizerState.AtToken">
+<short></short>
+</element>
+
+<!-- class Visibility: default -->
+<element name="ETokenError">
+<short>Used when an impossible sequence of characters is encountered.</short>
+<descr>
+</descr>
+<errors>
+</errors>
+<seealso>
+</seealso>
+</element>
+
+<!-- class Visibility: default -->
+<element name="TTokenizer">
+<short>Convert string into a list of tokens</short>
+<descr>
+<p>Converts the input from the user, in the form  of a string, into a list 
+of tokens. Each token will be a string. Minimal error checking is performed. However,
+a few obvious cases that are impossible are caught, such as two decimal places
+in a number.</p>
+<p>A finite state machine is used to convert the characters into tokens. This allows
+the minus sign to be used for negative values or as a subtraction symbol.</p>
+</descr>
+<errors>
+<p>Throws ETokenError if an impossible token is discovered, such as two decimal
+points in a number.</p>
+</errors>
+<seealso>
+</seealso>
+</element>
+
+<!-- variable Visibility: private -->
+<element name="TTokenizer.FInputString">
+<short></short>
+<descr>
+</descr>
+<seealso>
+</seealso>
+</element>
+
+<!-- variable Visibility: private -->
+<element name="TTokenizer.FToken">
+<short></short>
+<descr>
+</descr>
+<seealso>
+</seealso>
+</element>
+
+<!-- variable Visibility: private -->
+<element name="TTokenizer.FTokenList">
+<short></short>
+<descr>
+</descr>
+<seealso>
+</seealso>
+</element>
+
+<!-- variable Visibility: private -->
+<element name="TTokenizer.FCurrentState">
+<short></short>
+<descr>
+</descr>
+<seealso>
+</seealso>
+</element>
+
+<!-- procedure Visibility: private -->
+<element name="TTokenizer.ParseNewToken">
+<short></short>
+<descr>
+</descr>
+<errors>
+</errors>
+<seealso>
+</seealso>
+</element>
+
+<!-- argument Visibility: default -->
+<element name="TTokenizer.ParseNewToken.ch">
+<short></short>
+</element>
+
+<!-- procedure Visibility: private -->
+<element name="TTokenizer.ParseIntegerToken">
+<short></short>
+<descr>
+</descr>
+<errors>
+</errors>
+<seealso>
+</seealso>
+</element>
+
+<!-- argument Visibility: default -->
+<element name="TTokenizer.ParseIntegerToken.ch">
+<short></short>
+</element>
+
+<!-- procedure Visibility: private -->
+<element name="TTokenizer.ParseDashToken">
+<short></short>
+<descr>
+</descr>
+<errors>
+</errors>
+<seealso>
+</seealso>
+</element>
+
+<!-- argument Visibility: default -->
+<element name="TTokenizer.ParseDashToken.ch">
+<short></short>
+</element>
+
+<!-- procedure Visibility: private -->
+<element name="TTokenizer.ParseRealNumToken">
+<short></short>
+<descr>
+</descr>
+<errors>
+</errors>
+<seealso>
+</seealso>
+</element>
+
+<!-- argument Visibility: default -->
+<element name="TTokenizer.ParseRealNumToken.ch">
+<short></short>
+</element>
+
+<!-- procedure Visibility: private -->
+<element name="TTokenizer.ParseAlphaToken">
+<short></short>
+<descr>
+</descr>
+<errors>
+</errors>
+<seealso>
+</seealso>
+</element>
+
+<!-- argument Visibility: default -->
+<element name="TTokenizer.ParseAlphaToken.ch">
+<short></short>
+</element>
+
+<!-- procedure Visibility: private -->
+<element name="TTokenizer.ParseError">
+<short></short>
+<descr>
+</descr>
+<errors>
+</errors>
+<seealso>
+</seealso>
+</element>
+
+<!-- procedure Visibility: private -->
+<element name="TTokenizer.ProcessWhitespace">
+<short></short>
+<descr>
+</descr>
+<errors>
+</errors>
+<seealso>
+</seealso>
+</element>
+
+<!-- procedure Visibility: private -->
+<element name="TTokenizer.ParseAtToken">
+<short></short>
+<descr>
+</descr>
+<errors>
+</errors>
+<seealso>
+</seealso>
+</element>
+
+<!-- argument Visibility: default -->
+<element name="TTokenizer.ParseAtToken.ch">
+<short></short>
+</element>
+
+<!-- constructor Visibility: public -->
+<element name="TTokenizer.Create">
+<short>Constructor for the class.</short>
+<descr>
+Converts a string into a list of tokens. The caller is reponsible for providing
+a TStringList that will be used to hold the tokens and managing the memory associated
+with the TStringList, including freeing it when it is no longer needed.
+<p>Parameters:</p>
+<ul>
+<li>InputString - The string that will be split into tokens.</li>
+<li>TokenList - The TStringList that will be used to store the tokens. The caller
+is responsible for managing the memory associated with this TStringList.</li>
+</ul>
+</descr>
+<errors>
+</errors>
+<seealso>
+</seealso>
+</element>
+
+<!-- argument Visibility: default -->
+<element name="TTokenizer.Create.InputString">
+<short></short>
+</element>
+
+<!-- destructor Visibility: public -->
+<element name="TTokenizer.Destroy">
+<short></short>
+<descr>
+</descr>
+<errors>
+</errors>
+<seealso>
+</seealso>
+</element>
+
+<!-- function Visibility: public -->
+<element name="TTokenizer.ParseTokens">
+<short>Controlling procedure to convert a string into tokens.</short>
+<descr>
+The string that was provided as InputString in the create method will be converted
+into a TStringList of tokens. The TStringList was provided with the create method.
+</descr>
+<errors>
+</errors>
+<seealso>
+</seealso>
+</element>
+
+<!-- function result Visibility: default -->
+<element name="TTokenizer.ParseTokens.Result">
+<short></short>
+</element>
+
+</module> <!-- Tokenizer -->
+
+</package>
+</fpdoc-descriptions>
