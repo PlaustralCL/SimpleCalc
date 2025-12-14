@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<fpdoc-descriptions>
+<package name="simplecalc">
+
+<!--
+  ====================================================================
+    PostFixCalculator
+  ====================================================================
+-->
+
+<module name="PostFixCalculator">
+<short>Performs postfix calcuations based on a provided queue of operands and operators.</short>
+<descr>
+</descr>
+
+<!-- uses unit Visibility: default -->
+<element name="Classes">
+<short></short>
+</element>
+
+<!-- uses unit Visibility: default -->
+<element name="SysUtils">
+<short></short>
+</element>
+
+<!-- uses unit Visibility: default -->
+<element name="Math">
+<short></short>
+</element>
+
+<!-- uses unit Visibility: default -->
+<element name="StringQueue">
+<short></short>
+</element>
+
+<!-- class Visibility: default -->
+<element name="EUnknownOperatorError">
+<short>Raised if an unknown operator is encountered.</short>
+<descr>
+</descr>
+<errors>
+</errors>
+<seealso>
+</seealso>
+</element>
+
+<!-- class Visibility: default -->
+<element name="EDivideByZeroError">
+<short>Raised if division by zero is attempted.</short>
+<descr>
+</descr>
+<errors>
+</errors>
+<seealso>
+</seealso>
+</element>
+
+<!-- class Visibility: default -->
+<element name="TFloatStack">
+<short>Stack operations for floats.</short>
+<descr>
+Stack operations for floats. Intended to hold operands during postfix processing.
+</descr>
+<errors>
+</errors>
+<seealso>
+</seealso>
+</element>
+
+<!-- constructor Visibility: public -->
+<element name="TFloatStack.Create">
+<short>Create an empty stack</short>
+<descr>
+Internally, the stack is represented by an array, initially of length two. As 
+elements are added to the stack, the array is doubled each time the limits of the
+current array are reached.
+</descr>
+<errors>
+</errors>
+<seealso>
+</seealso>
+</element>
+
+<!-- function Visibility: public -->
+<element name="TFloatStack.Size">
+<short>Returns the number of elements in the stack.</short>
+<descr>
+Returns the number of elements in the stack. An empty stack returns 0.
+</descr>
+<errors>
+</errors>
+<seealso>
+</seealso>
+</element>
+
+<!-- function result Visibility: default -->
+<element name="TFloatStack.Size.Result">
+<short></short>
+</element>
+
+<!-- function Visibility: public -->
+<element name="TFloatStack.Pop">
+<short>Removes the top item from the stack and returns it.</short>
+<descr>
+</descr>
+<errors>
+</errors>
+<seealso>
+</seealso>
+</element>
+
+<!-- function result Visibility: default -->
+<element name="TFloatStack.Pop.Result">
+<short></short>
+</element>
+
+<!-- procedure Visibility: public -->
+<element name="TFloatStack.Push">
+<short>Pushes the provided number onto the top of the stack.</short>
+<descr>
+</descr>
+<errors>
+</errors>
+<seealso>
+</seealso>
+</element>
+
+<!-- argument Visibility: default -->
+<element name="TFloatStack.Push.token">
+<short></short>
+</element>
+
+<!-- function Visibility: public -->
+<element name="TFloatStack.Peek">
+<short>Returns the number at the top of the stack without removing it.</short>
+<descr>
+</descr>
+<errors>
+</errors>
+<seealso>
+</seealso>
+</element>
+
+<!-- function result Visibility: default -->
+<element name="TFloatStack.Peek.Result">
+<short></short>
+</element>
+
+<!-- function Visibility: public -->
+<element name="TFloatStack.IsEmpty">
+<short>Returns true if the stack is empty, false otherwise.</short>
+<descr>
+</descr>
+<errors>
+</errors>
+<seealso>
+</seealso>
+</element>
+
+<!-- function result Visibility: default -->
+<element name="TFloatStack.IsEmpty.Result">
+<short></short>
+</element>
+
+<!-- variable Visibility: private -->
+<element name="TFloatStack.FCount">
+<short>The number of elements currently in the stack.</short>
+<descr>
+</descr>
+<seealso>
+</seealso>
+</element>
+
+<!-- variable Visibility: private -->
+<element name="TFloatStack.FLength">
+<short>The length of the array used to hold the stack.</short>
+<descr>
+</descr>
+<seealso>
+</seealso>
+</element>
+
+<!-- variable Visibility: private -->
+<element name="TFloatStack.FStackArray">
+<short>The array the holds the stack.</short>
+<descr>
+</descr>
+<seealso>
+</seealso>
+</element>
+
+<!-- procedure Visibility: private -->
+<element name="TFloatStack.GrowArray">
+<short>Double the size of the array used to hold the stack.</short>
+<descr>
+Doubles the size of the array used to hold the stack. Each element in the current
+stack is copied to the new stack
+</descr>
+<errors>
+</errors>
+<seealso>
+</seealso>
+</element>
+
+<!-- class Visibility: default -->
+<element name="TPostFixCalculator">
+<short>Performs postfix calcuations based on a provided queue of operands and operators.</short>
+<descr>
+</descr>
+<errors>
+</errors>
+<seealso>
+</seealso>
+</element>
+
+<!-- constructor Visibility: public -->
+<element name="TPostFixCalculator.Create">
+<short>Creates a new calculator instance.</short>
+<descr>
+Creates a new calculator instance. In order to make use of the stored value from
+the previous calculation, it is recommended to only use one instance of this class.
+Creating a new instance for each calculation will reset the value of the previous
+result to 0.
+</descr>
+<errors>
+</errors>
+<seealso>
+</seealso>
+</element>
+
+<!-- destructor Visibility: public -->
+<element name="TPostFixCalculator.Destroy">
+<short>Destroys on the internally created and used stack that held the operands.</short>
+<descr>
+</descr>
+<errors>
+</errors>
+<seealso>
+</seealso>
+</element>
+
+<!-- function Visibility: public -->
+<element name="TPostFixCalculator.Calculate">
+<short>Perform the postfix calculation and returns a double.</short>
+<descr>
+<p>Performs the postfix calculation and returns a double. The result of the previous
+calculation will be substitued for the @ symbol, if it is encountered. Errors will terminate
+the calculation without returning a numerical value.</p>
+<p>Parameters:</p>
+<ul>
+<li>PostFixExpression - A queue of strings that holds the operands and operators
+in the proper order for performing postfix calculations. This queue will be emptied
+as part of the calculation process, but the caller is still responsible for mananaging
+the memory associated with the queue.</li>
+</ul>
+<p>Return - The result of the calculation, as a double.</p>
+</descr>
+<errors>
+<p>EUnknownOperatorError if an ununknown operator is encountered.</p>
+<p>EDivideByZeroError if division by zero is attempted.</p>
+</errors>
+<seealso>
+</seealso>
+</element>
+
+<!-- function result Visibility: default -->
+<element name="TPostFixCalculator.Calculate.Result">
+<short></short>
+</element>
+
+<!-- argument Visibility: default -->
+<element name="TPostFixCalculator.Calculate.PostFixExpression">
+<short></short>
+</element>
+
+<!-- variable Visibility: private -->
+<element name="TPostFixCalculator.FOperandStack">
+<short></short>
+<descr>
+</descr>
+<seealso>
+</seealso>
+</element>
+
+<!-- variable Visibility: private -->
+<element name="TPostFixCalculator.FAns">
+<short></short>
+<descr>
+</descr>
+<seealso>
+</seealso>
+</element>
+
+<!-- procedure Visibility: private -->
+<element name="TPostFixCalculator.Add">
+<short></short>
+<descr>
+</descr>
+<errors>
+</errors>
+<seealso>
+</seealso>
+</element>
+
+<!-- procedure Visibility: private -->
+<element name="TPostFixCalculator.Subtract">
+<short></short>
+<descr>
+</descr>
+<errors>
+</errors>
+<seealso>
+</seealso>
+</element>
+
+<!-- procedure Visibility: private -->
+<element name="TPostFixCalculator.Divide">
+<short></short>
+<descr>
+</descr>
+<errors>
+</errors>
+<seealso>
+</seealso>
+</element>
+
+<!-- procedure Visibility: private -->
+<element name="TPostFixCalculator.Multiply">
+<short></short>
+<descr>
+</descr>
+<errors>
+</errors>
+<seealso>
+</seealso>
+</element>
+
+<!-- procedure Visibility: private -->
+<element name="TPostFixCalculator.Power">
+<short></short>
+<descr>
+</descr>
+<errors>
+</errors>
+<seealso>
+</seealso>
+</element>
+
+<!-- procedure Visibility: private -->
+<element name="TPostFixCalculator.IntegerDivision">
+<short></short>
+<descr>
+</descr>
+<errors>
+</errors>
+<seealso>
+</seealso>
+</element>
+
+<!-- procedure Visibility: private -->
+<element name="TPostFixCalculator.Modulo">
+<short></short>
+<descr>
+</descr>
+<errors>
+</errors>
+<seealso>
+</seealso>
+</element>
+
+</module> <!-- PostFixCalculator -->
+
+</package>
+</fpdoc-descriptions>

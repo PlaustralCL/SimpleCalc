@@ -9,7 +9,7 @@
 -->
 
 <module name="ShuntingYardParser">
-<short></short>
+<short>Convert a list of tokens into a queue for postfix calculations.</short>
 <descr>
 </descr>
 
@@ -35,7 +35,7 @@
 
 <!-- specialized class type Visibility: default -->
 <element name="TStringStack">
-<short></short>
+<short>A stack that works with strings.</short>
 <descr>
 </descr>
 <seealso>
@@ -65,7 +65,7 @@ Algorithm, as described at <url href="https://mathcenter.oxford.emory.edu/site/c
 <li>TokenList - The list of tokens to process. The ShuntingYardParser does not manage
 the memory for the token list</li>
 <li>OutputQueue - The empty queue of strings where the postfix information will be stored.
-The caller is responsible for freeing the Queue.</li>
+The caller is responsible for freeing the queue.</li>
 </ul>
 
 </descr>
@@ -89,8 +89,10 @@ The caller is responsible for freeing the Queue.</short>
 
 <!-- destructor Visibility: public -->
 <element name="TShuntingYardParser.Destroy">
-<short></short>
+<short>Frees memory for objects created and used internally.</short>
 <descr>
+Frees memory for objects created and used internally. There is no impact on
+the TokenList or OutputQueue that were provided in the Create method.
 </descr>
 <errors>
 </errors>

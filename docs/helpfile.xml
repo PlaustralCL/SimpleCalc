@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<fpdoc-descriptions>
+<package name="simplecalc">
+
+<!--
+  ====================================================================
+    HelpFile
+  ====================================================================
+-->
+
+<module name="HelpFile">
+<short>Load information from the helpfile and print it to the terminal.</short>
+<descr>
+</descr>
+
+<!-- uses unit Visibility: default -->
+<element name="Classes">
+<short></short>
+</element>
+
+<!-- uses unit Visibility: default -->
+<element name="SysUtils">
+<short></short>
+</element>
+
+<!-- procedure Visibility: default -->
+<element name="PrintHelp">
+<short>Load information from the helpfile and print it to the terminal.</short>
+<descr>
+</descr>
+<errors>
+</errors>
+<seealso>
+</seealso>
+</element>
+
+</module> <!-- HelpFile -->
+
+</package>
+</fpdoc-descriptions>
