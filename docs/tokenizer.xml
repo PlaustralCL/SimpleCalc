@@ -297,6 +297,8 @@ The string that was provided as InputString in the create method will be convert
 into a TStringList of tokens. The TStringList was provided with the create method.
 </descr>
 <errors>
+<p>ETokenError - if two decimal points occur in one number.</p>
+<p>ETokenError - if more than one @ symbol in a row is used, for example, @@.</p>
 </errors>
 <seealso>
 </seealso>
