@@ -1,8 +1,12 @@
 ******************************************************************************
 Simple Calculator
 
-help - read this file
+help - read this information
 quit - exit the program
+
+Constants:
+  pi - The value of Pi, 3.1415926535897932385
+  exp - The value of Euler's number, 2.71828182845905
 
 Math operations:
   @ The result of the previous calculation. Initially set to 0.
@@ -20,6 +24,7 @@ Order of operations follows the normal order in math or Python:
   multiplication, division, integer division, and modulo
   addition and subtraction
 
+- There is no implicit multiplication. Use * for all multiplication.
 - Where operators have the same precedence, they are evaluated from left to right.
 - Whitespace does not impact the calculation.
 - Negative number are processed as expected. However, you cannot negate a

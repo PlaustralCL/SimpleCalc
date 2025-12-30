@@ -41,6 +41,7 @@ type
 
 implementation
 
+
 constructor TTokenizer.Create(InputString: string; TokenList: TStringList);
 begin
   FInputString := InputString;
@@ -94,14 +95,23 @@ end;
 
 procedure TTokenizer.ParseAtToken(ch: char);
 begin
-  if ch = ' ' then
-    ProcessWhitespace
-  else
-  begin
-    FTokenList.Add(FToken);
-    FTokenList.Add(ch);
-    FToken := '';
-    FCurrentState := NewToken;
+  case ch of
+    '@', '0'..'9', 'A'..'Z', 'a'..'z', '.':
+    begin
+      raise ETokenError.Create('@ must be followed by white space or an operator');
+    end;
+    ' ':
+    begin
+      FToken := '';
+      FCurrentState := NewToken;
+    end;
+    else
+    begin
+      FTokenList.Add(FToken);
+      FTokenList.Add(ch);
+      FToken := '';
+      FCurrentState := NewToken;
+    end;
   end;
 end;
 
@@ -134,9 +144,11 @@ begin
       FTokenList.Add(ch);
       FToken := '';
       FCurrentState := AtToken;
+      //raise ETokenError.Create('@ must be proceeded by whitespace or an operator');
     end
     else
     begin
+      // This is where non-dash operators are handled
       FTokenList.Add(ch);
       FToken := '';
     end;
@@ -162,9 +174,7 @@ begin
     end;
     '@':
     begin
-      FTokenList.Add(ch);
-      FToken := '';
-      FCurrentState := AtToken;
+      raise ETokenError.Create('@ must be proceeded by an operator');
     end
     else
     begin
@@ -191,9 +201,7 @@ begin
     end;
     '@':
     begin
-      FTokenList.Add(ch);
-      FToken := '';
-      FCurrentState := AtToken;
+      raise ETokenError.Create('@ must be proceeded by an operator');
     end;
     '.':
     begin
@@ -254,21 +262,25 @@ end;
 
 procedure TTokenizer.ParseAlphaToken(ch: char);
 begin
+  ch := LowerCase(ch);
   case ch of
-    'A'..'Z':
-    begin
-      ch := chr(Ord(ch) + 32); // convert to lowercase
-      FToken := FToken + ch;
-    end;
     'a'..'z':
     begin
       FToken := FToken + ch;
+      if FToken = 'pi' then
+      begin
+        FToken := FloatToStr(Pi);
+        ProcessWhitespace;
+      end
+      else if FToken = 'exp' then
+      begin
+        FToken := FloatToStr(Exp(1));
+        ProcessWhitespace;
+      end
     end;
     '@':
     begin
-      FTokenList.Add(ch);
-      FToken := '';
-      FCurrentState := AtToken;
+      raise ETokenError.Create('@ must be proceeded by an operator');
     end
     else
     begin
@@ -278,7 +290,6 @@ begin
       ParseNewToken(ch);
     end;
   end;
-
 end;
 
 
