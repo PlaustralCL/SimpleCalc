@@ -31,6 +31,7 @@ type
     procedure ParseAlphaToken(ch: char);
     procedure ParseError;
     procedure ProcessWhitespace;
+    procedure SubstituteConstants;
     procedure ParseAtToken(ch: char);
   public
     constructor Create(InputString: string; TokenList: TStringList);
@@ -75,6 +76,7 @@ begin
     end;
   end;
   FTokenList.Add(FToken);
+  SubstituteConstants
 end;
 
 
@@ -91,6 +93,23 @@ begin
   FTokenList.Add(FToken);
   FToken := '';
   FCurrentState := NewToken;
+end;
+
+procedure TTokenizer.SubstituteConstants;
+var
+  i: integer;
+begin
+  for i := 0 to FTokenList.Count - 1 do
+  begin
+    if FTokenList[i] = 'pi' then
+    begin
+      FTokenList[i] := FloatToStr(Pi);
+    end
+    else if FTokenList[i] = 'exp' then
+    begin
+      FTokenList[i] := FloatToStr(Exp(1));
+    end;
+  end;
 end;
 
 procedure TTokenizer.ParseAtToken(ch: char);
@@ -267,16 +286,6 @@ begin
     'a'..'z':
     begin
       FToken := FToken + ch;
-      if FToken = 'pi' then
-      begin
-        FToken := FloatToStr(Pi);
-        ProcessWhitespace;
-      end
-      else if FToken = 'exp' then
-      begin
-        FToken := FloatToStr(Exp(1));
-        ProcessWhitespace;
-      end
     end;
     '@':
     begin
