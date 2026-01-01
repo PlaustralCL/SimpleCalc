@@ -28,6 +28,6 @@ Order of operations follows the normal order in math or Python:
 - Where operators have the same precedence, they are evaluated from left to right.
 - Whitespace does not impact the calculation.
 - Negative number are processed as expected. However, you cannot negate a
-  negative number back to postive. For example, --3 or -(-3) will throw an
+  negative number back to positive. For example, --3 or -(-3) will throw an
   exception. Instead, multiply it by negative one: -1 * -3 = 3.
 ******************************************************************************
