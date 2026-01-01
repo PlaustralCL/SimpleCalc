@@ -2,7 +2,7 @@
 A simple calculator because I  wanted real division and was too lazy to type `bc -l` when using Linux. This program also demonstrates the power of Free Pascal and the Lazarus IDE to build cross-platform apps with small, native executables. 
 
 ## Installation
-1. Download the most recent version for your platform from the releases page.
+1. Download the most recent version for your platform from the [releases page](https://github.com/PlaustralCL/SimpleCalc/releases/tag/latest).
 2. If you want to use it from anywhere, place the file somewhere in your Path.
 3. On Linux, make the file executable, `chmod +x <filename>`
 
