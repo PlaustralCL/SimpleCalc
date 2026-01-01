@@ -1,6 +1,8 @@
 backup/
 lib/
-*.exe
+simplecalc.exe
+calctest.exe
+tests/tokenizertest.exe
 *.lps
 *.o
 *.ppu
