@@ -89,7 +89,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="simplecalc"/>
+            <Filename Value="simplecalc-x86_64-linux"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
