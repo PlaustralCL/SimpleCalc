@@ -15,21 +15,22 @@ A simple calculator because I  wanted real division and was too lazy to type `bc
 - `exp` - The value of Euler's number, 2.71828182845905
 
 ### Math operations:
-  `@` The result of the previous calculation. Initially set to 0.
-  `+` Addition
-  `-` Subtraction
-  `/` Real division. 10 / = 3.33333333333333
-  `*` Multiplication
-  `^` Exponentiation
-  `%` Modulo. Returns the remainder after division. 10 % 3 = 1
-  `\` Integer division. 10 \ 3 = 3
+- `@` The result of the previous calculation. Initially set to 0.
+- `+` Addition
+- `-` Subtraction
+- `/` Real division. 10 / = 3.33333333333333
+- `*` Multiplication
+- `^` Exponentiation
+- `%` Modulo. Returns the remainder after division. 10 % 3 = 1
+- `\` Integer division. 10 \ 3 = 3
 
 ### Order of Operations
 Order of operations follows the normal order in math or Python:
-  1. parentheses
-  2. exponents
-  3. multiplication, division, integer division, and modulo
-  4. addition and subtraction
+1. parentheses
+2. exponents
+3. multiplication, division, integer division, and modulo
+4. addition and subtraction
+
 ### Notes
 - There is no implicit multiplication. Use * for all multiplication.
 - Where operators have the same precedence, they are evaluated from left to right.
